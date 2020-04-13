@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "koa2-generator": "^1.1.7"
+  },
+  "name": "blog-koa",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuodou/blog-koa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuodou/blog-koa/issues"
+  },
+  "homepage": "https://github.com/tuodou/blog-koa#readme",
+  "description": ""
+}
