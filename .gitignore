@@ -1,8 +1,13 @@
 .DS_Store
 .idea
 .vscode
+package-lock.json
 
 /node_modules
 /blog/node_modules
 /blogAdmin/node_modules
 /server/node_modules
+
+/blog/yarn.lock
+/blog-admin/node_modules
+/blog-admin/yarn.lock
