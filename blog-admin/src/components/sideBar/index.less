@@ -1,0 +1,25 @@
+.menu {
+  padding-top: 10px;
+}
+.menu-title-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  border-right: 1px solid #e8e8e8;
+  .logo {
+    height: 64px;
+    border-radius: 50%;
+  }
+  .title {
+    width: auto;
+    color: #333;
+    font-size: 18px;
+    word-wrap: nowrap;
+    transition: width 300ms ease-in-out;
+    &.hidden {
+      overflow: hidden;
+      width: 0;
+    }
+  }
+}

@@ -1,17 +1,11 @@
 export default [
   {
-    path: 'signIn',
-    name: 'signIn',
-    component: () => import('@/pages/user/signIn')
-  },
-  {
-    path: 'signUp',
-    name: 'signUp',
-    component: () => import('@/pages/user/signUp')
-  },
-  {
     path: 'user',
     name: 'user',
+    meta: {
+      title: '用户管理',
+      icon: 'team'
+    },
     component: () => import('@/pages/user')
   }
 ]

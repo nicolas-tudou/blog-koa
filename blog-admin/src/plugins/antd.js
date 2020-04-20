@@ -28,7 +28,8 @@ import {
   Spin,
   Popover,
   Empty,
-  Collapse
+  Collapse,
+  Dropdown
 } from 'ant-design-vue'
 
 Vue.use(Layout)
@@ -75,6 +76,7 @@ Vue.component(Steps.name, Steps)
 Vue.component(Steps.Step.name, Steps.Step)
 Vue.component(Spin.name, Spin)
 Vue.component(Popover.name, Popover)
+Vue.component(Dropdown.name, Dropdown)
 Vue.use(Empty)
 Vue.use(Collapse)
 
