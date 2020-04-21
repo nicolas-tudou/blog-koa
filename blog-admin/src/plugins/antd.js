@@ -29,7 +29,10 @@ import {
   Popover,
   Empty,
   Collapse,
-  Dropdown
+  Dropdown,
+  Tag,
+  Badge,
+  ConfigProvider
 } from 'ant-design-vue'
 
 Vue.use(Layout)
@@ -77,6 +80,9 @@ Vue.component(Steps.Step.name, Steps.Step)
 Vue.component(Spin.name, Spin)
 Vue.component(Popover.name, Popover)
 Vue.component(Dropdown.name, Dropdown)
+Vue.component(Tag.name, Tag)
+Vue.component(Badge.name, Badge)
+Vue.component(ConfigProvider.name, ConfigProvider)
 Vue.use(Empty)
 Vue.use(Collapse)
 
