@@ -21,11 +21,12 @@
       </div>
       <div class="filter-item">
         <label>博客状态：</label>
-        <a-select style="width: 120px" v-model="reqData.authId" :options="blogStatus" />
+        <a-select style="width: 120px" v-model="reqData.status" :options="blogStatus" />
       </div>
       <div class="filter-item">
         <a-button type="primary" :loading="tableLoading" @click="queryBlog">查询</a-button>
         <a-button style="margin-left: 20px;" @click="resetQuery">重置</a-button>
+        <a-button style="margin-left: 20px;" @click="addNewBlog">新增博客</a-button>
       </div>
     </div>
     <a-table
@@ -56,8 +57,8 @@
         <div class="operation-btn">
           <a-button type="primary" @click="toEditBlog(record)">编辑</a-button>
           <a-button v-if="record.status === blogStatusMap.hide" type="primary" @click="showBlog(record)">上架</a-button>
-          <a-button v-if="record.status === blogStatusMap.normal" type="primary" @click="hideBLog(record)">下架</a-button>
-          <a-button v-if="record.status !== blogStatusMap.deleted" type="primary" @click="deleteBlog(record)">删除</a-button>
+          <a-button v-if="record.status === blogStatusMap.normal" @click="hideBLog(record)">下架</a-button>
+          <a-button v-if="record.status !== blogStatusMap.deleted" @click="deleteBlog(record)">删除</a-button>
         </div>
       </template>
     </a-table>
@@ -167,6 +168,9 @@ export default {
     toEditBlog (record) {
       console.log('edit', record)
       this.$router.push({ name: 'detail', query: { id: record.id }})
+    },
+    addNewBlog () {
+      this.$router.push({ name: 'detail' })
     },
     /**
      * @function 下架博客

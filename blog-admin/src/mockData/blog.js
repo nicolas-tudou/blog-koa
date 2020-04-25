@@ -65,3 +65,32 @@ export const deleteBlogApi = () => {
   })
 }
 
+export const getBlogDetailApi = () => {
+  return new Promise((resolve) => {
+    resolve({
+      id: 1,
+      title: 'title',
+      logo: 'https://pic4.zhimg.com/v2-3479104608fc54ddf239513ac84b55b3_im.jpg',
+      brief: 'this is a brief for this blog',
+      detail: 'this is a detail for this blog',
+      categoryId: 1,
+      tags: [
+        {
+          tagId: 1,
+          tagName: 'tag1',
+          color: '#f50'
+        }
+      ],
+      comment: [
+        {
+          commentId: 1,
+          comment: 'comment 1'
+        },
+        {
+          commentId: 2,
+          comment: 'comment 2'
+        }
+      ]
+    })
+  })
+}

@@ -69,7 +69,6 @@ export const blogColumns = [
     width: 200,
     scopedSlots: { customRender: 'blogTags' }
   },
-
   {
     title: '操作',
     dataIndex: '',

@@ -32,7 +32,9 @@ import {
   Dropdown,
   Tag,
   Badge,
-  ConfigProvider
+  ConfigProvider,
+  Avatar,
+  Comment
 } from 'ant-design-vue'
 
 Vue.use(Layout)
@@ -42,6 +44,7 @@ Vue.component(Form.name, Form)
 Vue.component(Form.Item.name, Form.Item)
 Vue.component(Button.name, Button)
 Vue.component(Input.name, Input)
+Vue.component(Input.TextArea.name, Input.TextArea)
 Vue.component(Icon.name, Icon)
 Vue.component(Menu.name, Menu)
 Vue.component(Menu.Item.name, Menu.Item)
@@ -83,6 +86,8 @@ Vue.component(Dropdown.name, Dropdown)
 Vue.component(Tag.name, Tag)
 Vue.component(Badge.name, Badge)
 Vue.component(ConfigProvider.name, ConfigProvider)
+Vue.component(Avatar.name, Avatar)
+Vue.component(Comment.name, Comment)
 Vue.use(Empty)
 Vue.use(Collapse)
 
