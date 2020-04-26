@@ -1,6 +1,7 @@
 import StylelintWebpackPlugin from 'stylelint-webpack-plugin'
 import webpack from 'webpack'
 module.exports = {
+  outputDir: '../server/views',
   configureWebpack: {
     plugins: [
       new StylelintWebpackPlugin({

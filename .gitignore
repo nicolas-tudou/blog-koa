@@ -11,3 +11,6 @@ package-lock.json
 /blog/yarn.lock
 /blog-admin/node_modules
 /blog-admin/yarn.lock
+
+/server/public
+/server/views
