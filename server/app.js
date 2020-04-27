@@ -12,7 +12,7 @@ const cors = require('koa2-cors')
 const path = require('path')
 
 
-const config = require('./config')
+import { port } from './config'
 
 import router from './router'
 
@@ -35,12 +35,12 @@ app
   .use(router.allowedMethods())
 
 // logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - $ms`)
-})
+// app.use(async (ctx, next) => {
+//   const start = new Date()
+//   await next()
+//   const ms = new Date() - start
+//   console.log(`${ctx.method} ${ctx.url} - $ms`)
+// })
 
 router.get('/admin', async (ctx, next) => {
   await ctx.render('admin/index')
@@ -54,6 +54,6 @@ app.on('error', function(err, ctx) {
   logger.error('server error', err, ctx)
 })
 
-module.exports = app.listen(config.port, () => {
-  console.log(`Listening on http://localhost:${config.port}`)
+module.exports = app.listen(port, () => {
+  console.log(`Listening on http://localhost:${port}`)
 })
