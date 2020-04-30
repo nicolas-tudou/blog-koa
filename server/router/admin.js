@@ -1,5 +1,6 @@
+import user from '../controller/user'
+
 export default router => {
-  router.post('/test', (req, res) => {
-    res.send('hello world, test code')
-  })
+  router.post('/admin/signIn', user.signIn)
+  router.post('/admin/signUp', user.signUp)
 }
