@@ -63,7 +63,7 @@
       <comment-item v-for="comment in commentList" :key="comment.id" :comment="comment" />
     </div>
     <a-modal v-model="showPreviewImg" :footer="null" @cancel="cancelPreview">
-      <img style="width: 80%" :src="blog.logo" />
+      <img style="width: 80%;" :src="blog.logo" />
     </a-modal>
   </div>
 </template>

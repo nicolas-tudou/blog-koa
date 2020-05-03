@@ -1,0 +1,14 @@
+export default {
+  LOGIN_ERROR: 1000,
+  LOGIN_INFO_ERROR: 300,
+  NETWORK_ERROR: 400,
+  BLOG_INFO_ERROR: 601,
+  PARAM_EMPTY: 602,
+  PARAM_ERROR: 603,
+
+  // category
+  CATEGORY_EXISTS: 701,
+
+  // tag
+  TAG_EXISTS: 711
+}

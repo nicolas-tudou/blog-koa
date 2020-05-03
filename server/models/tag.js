@@ -11,35 +11,39 @@ import tagblog from 'tagBlog'
     status int(1) not NULL DEFAULT 1 comment "分类状态：1-正常 2-下架 3-已删除"
     );
  */
-const tag = sequelize.define('t_user', {
+export default sequelize.define('t_tag', {
   id: {
     type: Sequelize.INTEGER,
-    filed: 'id',
+    field: 'id',
     primaryKey: true
   },
   tag: {
     type: Sequelize.STRING,
-    filed: 'tag',
+    field: 'tag',
+    allowNull: false
+  },
+  color: {
+    type: Sequelize.STRING,
+    field: 'color',
     allowNull: false
   },
   createTime: {
     type: Sequelize.DATE,
-    filed: 'c_time'
+    field: 'c_time'
   },
   updateTime: {
     type: Sequelize.DATE,
-    filed: 'u_time'
+    field: 'u_time'
   },
   status: {
     type: Sequelize.INTEGER,
-    filed: 'status',
+    field: 'status',
     allowNull: false,
     default: 1
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time' })
+}, { createdAt: 'c_time', updatedAt: 'u_time', tablename: 't_tag' })
+
 tag.belongsToMany(blog, {
   through: tagBlog,
   foreignKey: 'tag_id'
 })
-
-export default tag

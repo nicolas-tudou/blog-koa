@@ -16,41 +16,41 @@ import blog from './blog'
 const comment = sequelize.define('t_user', {
   id: {
     type: Sequelize.INTEGER,
-    filed: 'id',
+    field: 'id',
     primaryKey: true
   },
   blogId: {
     type: Sequelize.STRING,
-    filed: 'blog_id',
+    field: 'blog_id',
     allowNull: false
   },
   parent: {
     type: Sequelize.STRING,
-    filed: 'parent',
+    field: 'parent',
     allowNull: false
   },
   comment: {
     type: Sequelize.STRING,
-    filed: 'comment',
+    field: 'comment',
     allowNull: false
   },
   user: {
     type: Sequelize.STRING,
-    filed: 'user',
+    field: 'user',
     allowNull: false
   },
   userAvatar: {
     type: Sequelize.STRING,
-    filed: 'user_avatar',
+    field: 'user_avatar',
     allowNull: false
   },
   createTime: {
     type: Sequelize.DATE,
-    filed: 'c_time'
+    field: 'c_time'
   },
   updateTime: {
     type: Sequelize.DATE,
-    filed: 'u_time'
+    field: 'u_time'
   }
 }, { createdAt: 'c_time', updatedAt: 'u_time' })
 

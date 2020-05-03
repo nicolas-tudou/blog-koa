@@ -1,7 +1,8 @@
 import Sequelize, { STRING } from "sequelize"
-import sequelize from '../lig/sequelize'
+import sequelize from '../lib/sequelize'
 import category from './category'
 import tagBlog from './tagBlog'
+import tag from './tag'
 import user from './user'
 /**
  * CREATE table IF NOT EXISTS t_blog(
@@ -22,55 +23,55 @@ import user from './user'
 const blog = sequelize.define('t_blog', {
   id: {
     type: Sequelize.INTEGER,
-    filed: 'id',
+    field: 'id',
     primaryKey: true
   },
   title: {
     type: Sequelize.STRING,
-    filed: 'title',
+    field: 'title',
     allowNull: false
   },
   categoryId: {
     type: Sequelize.INTEGER,
-    filed: 'category_id',
+    field: 'category_id',
     allowNull: false
   },
   authId: {
     type: Sequelize.INTEGER,
-    filed: 'auth_id',
+    field: 'auth_id',
     allowNull: false
   },
   logo: {
     type: Sequelize.STRING,
-    filed: 'logo',
+    field: 'logo',
     allowNull: false
   },
   brief: {
     type: Sequelize.STRING,
-    filed: 'brief',
+    field: 'brief',
     allowNull: false
   },
   detail: {
     type: Sequelize.TEXT,
-    filed: 'detail',
+    field: 'detail',
     allowNull: false
   },
   readNum: {
     type: Sequelize.INTEGER,
-    filed: 'read_num',
+    field: 'read_num',
     allowNull: false
   },
   createTime: {
     type: Sequelize.DATE,
-    filed: 'c_time'
+    field: 'c_time'
   },
   updateTime: {
     type: Sequelize.DATE,
-    filed: 'u_time'
+    field: 'u_time'
   },
   status: {
     type: Sequelize.INTEGER,
-    filed: 'status',
+    field: 'status',
     allowNull: false,
     default: 1
   }

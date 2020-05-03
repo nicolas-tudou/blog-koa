@@ -16,42 +16,38 @@ import sequelize from '../lib/sequelize'
 export default sequelize.define('t_user', {
   id: {
     type: Sequelize.INTEGER,
-    filed: 'id',
+    field: 'id',
     primaryKey: true
   },
   name: {
     type: Sequelize.STRING,
-    filed: 'name',
+    field: 'name',
     allowNull: false
   },
   avatar: {
     type: Sequelize.STRING,
-    filed: 'avatar',
+    field: 'avatar',
     allowNull: false
   },
   password: {
     type: Sequelize.STRING,
-    filed: 'password',
+    field: 'password',
     allowNull: false
   },
   identify: {
     type: Sequelize.INTEGER,
-    filed: 'identify',
-    allowNull: false,
-    default: 3
+    field: 'identify'
   },
   createTime: {
     type: Sequelize.DATE,
-    filed: 'c_time'
+    field: 'c_time'
   },
   updateTime: {
     type: Sequelize.DATE,
-    filed: 'u_time'
+    field: 'u_time'
   },
   status: {
     type: Sequelize.INTEGER,
-    filed: 'status',
-    allowNull: false,
-    default: 1
+    field: 'status'
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time' })
+}, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_user' })

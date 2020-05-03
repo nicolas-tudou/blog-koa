@@ -3,25 +3,25 @@
     <div class="filter-box">
       <div class="filter-item">
         <label>博客名称：</label>
-        <a-input style="width: 160px" placeholder="请输入博客名" v-model="reqData.title" />
+        <a-input style="width: 160px;" placeholder="请输入博客名" v-model="reqData.title" />
       </div>
       <div class="filter-item">
         <label>分类：</label>
-        <a-select style="width: 120px" v-model="reqData.categoryId">
+        <a-select style="width: 120px;" v-model="reqData.categoryId">
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="category in categoryList" :key="category.id" :value="category.id">{{category.category}}</a-select-option>
         </a-select>
       </div>
       <div class="filter-item">
         <label>作者：</label>
-        <a-select style="width: 120px" v-model="reqData.authId">
+        <a-select style="width: 120px;" v-model="reqData.authId">
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="user in userList" :key="user.id" :value="user.id">{{user.userName}}</a-select-option>
         </a-select>
       </div>
       <div class="filter-item">
         <label>博客状态：</label>
-        <a-select style="width: 120px" v-model="reqData.status" :options="blogStatus" />
+        <a-select style="width: 120px;" v-model="reqData.status" :options="blogStatus" />
       </div>
       <div class="filter-item">
         <a-button type="primary" :loading="tableLoading" @click="queryBlog">查询</a-button>

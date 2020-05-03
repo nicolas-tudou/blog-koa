@@ -13,9 +13,9 @@ const path = require('path')
 
 
 import { port } from './config'
+import errCode from './config/errorCode'
 
 import router from './router'
-
 // error handler
 onerror(app)
 
@@ -33,14 +33,11 @@ app
   }))
   .use(router.routes())
   .use(router.allowedMethods())
-
-// logger
-// app.use(async (ctx, next) => {
-//   const start = new Date()
-//   await next()
-//   const ms = new Date() - start
-//   console.log(`${ctx.method} ${ctx.url} - $ms`)
-// })
+  .use((ctx, next) => {
+    next().catch(err => {
+      ctx.throw(500)
+    })
+  })
 
 router.get('/admin', async (ctx, next) => {
   await ctx.render('admin/index')

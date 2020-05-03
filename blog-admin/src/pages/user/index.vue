@@ -3,18 +3,18 @@
     <div class="filter-box">
       <div class="filter-item">
         <label>用户名称：</label>
-        <a-input style="width: 160px" placeholder="请输入用户名" v-model="reqData.name" />
+        <a-input style="width: 160px;" placeholder="请输入用户名" v-model="reqData.name" />
       </div>
       <div class="filter-item">
         <label>用户角色：</label>
-        <a-select style="width: 120px" v-model="reqData.identify" >
+        <a-select style="width: 120px;" v-model="reqData.identify" >
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="status in identifyOptions" :key="status.value" :value="status.value">{{status.label}}</a-select-option>
         </a-select>
       </div>
       <div class="filter-item">
         <label>用户状态：</label>
-        <a-select style="width: 120px" v-model="reqData.status" >
+        <a-select style="width: 120px;" v-model="reqData.status" >
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="status in userStatus" :key="status.value" :value="status.value">{{status.label}}</a-select-option>
         </a-select>
@@ -59,7 +59,7 @@
       <a-input style="width: 120px; margin-bottom: 10px;" placeholder="用户名" v-model="newUser.name" />
       <div class="filter-item">
         <label>用户角色：</label>
-        <a-select style="width: 120px" v-model="newUser.identify" >
+        <a-select style="width: 120px;" v-model="newUser.identify" >
           <a-select-option v-for="status in identifyOptions" :key="status.value" :value="status.value">{{status.label}}</a-select-option>
         </a-select>
       </div>

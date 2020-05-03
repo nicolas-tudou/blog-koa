@@ -4,7 +4,7 @@
     <a-dropdown :placement="'bottomCenter'">
       <span>{{user.name}}<a-icon type="down"/></span>
       <template #overlay>
-        <a-button  style="padding: 4px 10px;cursor: pointer;" @click="signOut">退出</a-button>
+        <a-button  style="padding: 4px 10px; cursor: pointer;" @click="signOut">退出</a-button>
       </template>
     </a-dropdown>
   </div>

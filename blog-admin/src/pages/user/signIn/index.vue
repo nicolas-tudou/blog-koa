@@ -14,7 +14,7 @@
               >
                 <a-icon slot="prefix" type="user" />
                 <a-tooltip slot="suffix" title="最长9个字符">
-                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />
+                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45);" />
                 </a-tooltip>
               </a-input>
               <a-input
@@ -26,7 +26,7 @@
               >
                 <a-icon slot="prefix" type="lock" />
                 <a-tooltip slot="suffix" title="最长20个字符">
-                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />
+                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45);" />
                 </a-tooltip>
               </a-input>
               <a-checkbox v-model="rememberUser">记住用户名</a-checkbox>
@@ -43,7 +43,7 @@
               >
                 <a-icon slot="prefix" type="user" />
                 <a-tooltip slot="suffix" title="最长9个字符">
-                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />
+                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45);" />
                 </a-tooltip>
               </a-input>
               <a-input
@@ -55,7 +55,7 @@
               >
                 <a-icon slot="prefix" type="user" />
                 <a-tooltip slot="suffix" title="最长20个字符">
-                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45)" />
+                  <a-icon type="info-circle" style="color: rgba(0,0,0,.45);" />
                 </a-tooltip>
               </a-input>
               <a-button class="margin-top" type="primary" @click="signUp">注册</a-button>
@@ -68,6 +68,9 @@
 </template>
 
 <script>
+import { signUpApi, loginApi } from '@/api/userApi'
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'signIn',
   data () {
@@ -84,14 +87,20 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUserInfo']),
     signUp () {
       if (!this.register.name || !this.register.password) {
         this.$warning({ content: '账号名或密码错误' })
         return
       }
-      localStorage.setItem('user', JSON.stringify(this.register))
-      this.$router.push({
-        name: 'root'
+      signUpApi(this.register).then(res => {
+        console.log('sign up', res)
+        localStorage.setItem('user', JSON.stringify(res))
+        localStorage.setItem('token', res.token)
+        this.setUserInfo(res)
+        this.$router.push({
+          name: 'root'
+        })
       })
     },
     signIn () {
@@ -99,10 +108,18 @@ export default {
         this.$warning({ content: '账号名或密码错误' })
         return
       }
-      localStorage.setItem('user', JSON.stringify(this.user))
-      this.$router.push({
-        name: 'root'
+      loginApi(this.user).then(res => {
+        console.log('login', res)
+        localStorage.setItem('user', JSON.stringify(res))
+        localStorage.setItem('token', res.token)
+        this.setUserInfo(res)
+        this.$router.push({
+          name: 'root'
+        })
+      }).catch(err => {
+        console.log(333, err)
       })
+      // localStorage.setItem('user', JSON.stringify(this.user))
     }
   }
 }

@@ -10,34 +10,34 @@ import sequelize from '../lib/sequelize'
     status int(1) not NULL DEFAULT 1 comment "分类状态：1-正常 2-下架 3-已删除"
  */
 
- const category = sequelize.define('t_category', {
+export default sequelize.define('t_category', {
   id: {
     type: Sequelize.INTEGER,
-    filed: 'id',
+    field: 'id',
     primaryKey: true
   },
   category: {
     type: Sequelize.STRING,
-    filed: 'category',
+    field: 'category',
     allowNull: false
   },
   blogNum: {
     type: Sequelize.INTEGER,
-    filed: 'blog_num',
+    field: 'blog_num',
     default: 0
-  }
+  },
   createTime: {
     type: Sequelize.DATE,
-    filed: 'c_time'
+    field: 'c_time'
   },
   updateTime: {
     type: Sequelize.DATE,
-    filed: 'u_time'
+    field: 'u_time'
   },
   status: {
     type: Sequelize.INTEGER,
-    filed: 'status',
-    allowNull: false,
+    field: 'status',
     default: 1
   }
- }, { createdAt: 'c_time', updatedAt: 'u_time' })
+ }, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_category' })
+ 

@@ -2,11 +2,12 @@ import axios from 'axios'
 import Vue from 'vue'
 
 const http = axios.create({
-  baseURL: '/api/admin/',
+  baseURL: '/api',
   timeout: 1000
 })
 
 http.interceptors.request.use(config => {
+  config.headers.Authorization = 'Bearer ' + localStorage.getItem('token') || ''
   return config
 })
 
@@ -23,17 +24,17 @@ http.interceptors.response.use(response => {
   }
 }, error => {
   console.log(error)
-  Vue.prototype.error(error.message || '系统错误，请重试')
+  Vue.prototype.$message.error(error.message || '系统错误，请重试')
+  return error
 })
 
 function Post (url, data, ...options) {
   return http({
     url,
+    method: 'POST',
     data,
     ...options
   })
 }
 
-export default {
-  Post
-}
+export default Post

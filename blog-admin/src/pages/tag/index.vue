@@ -3,11 +3,11 @@
     <div class="filter-box">
       <div class="filter-item">
         <label>标签名称：</label>
-        <a-input style="width: 160px" placeholder="请输入标签名" v-model="reqData.name" />
+        <a-input style="width: 160px;" placeholder="请输入标签名" v-model="reqData.name" />
       </div>
       <div class="filter-item">
         <label>标签状态：</label>
-        <a-select style="width: 120px" v-model="reqData.status" >
+        <a-select style="width: 120px;" v-model="reqData.status" >
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="status in tagStatus" :key="status.value" :value="status.value">{{status.label}}</a-select-option>
         </a-select>

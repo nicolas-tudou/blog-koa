@@ -7,7 +7,7 @@
       <img class="logo" src="../../assets/images/menu_logo.jpeg"/>
     </div>
     <a-menu
-      style="background: none"
+      style="background: none;"
       :defaultSelectedKeys="defaultSelectedKeys"
       :defaultOpenKeys="defaultOpenKeys"
       mode="inline"

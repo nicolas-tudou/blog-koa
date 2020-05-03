@@ -3,11 +3,11 @@
     <div class="filter-box">
       <div class="filter-item">
         <label>分类名称：</label>
-        <a-input style="width: 160px" placeholder="请输入分类名" v-model="reqData.name" />
+        <a-input style="width: 160px;" placeholder="请输入分类名" v-model="reqData.name" />
       </div>
       <div class="filter-item">
         <label>分类状态：</label>
-        <a-select style="width: 120px" v-model="reqData.status" >
+        <a-select style="width: 120px;" v-model="reqData.status" >
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="status in categoryStatus" :key="status.value" :value="status.value">{{status.label}}</a-select-option>
         </a-select>
@@ -35,7 +35,7 @@
       <template #operation="text, record">
         <div class="operation-btn">
           <a-button type="primary" @click="toEditCategory(record)">编辑</a-button>
-          <a-button v-if="record.status === categoryStatusMap.hide" type="primary" @click="showCategory(record)">上架</a-button>
+          <a-button v-if="record.status !== categoryStatusMap.normal" type="primary" @click="showCategory(record)">上架</a-button>
           <a-button v-if="record.status === categoryStatusMap.normal" @click="hideCategory(record)">下架</a-button>
           <a-button v-if="record.status !== categoryStatusMap.deleted" @click="deleteCategory(record)">删除</a-button>
         </div>
@@ -52,7 +52,8 @@
 import { categoryStatus, categoryStatusMap } from '@/config/status'
 import { categoryColumns } from '@/columns/categoryColumns'
 
-import { getCategoryListApi, addCategoryApi, showCategoryApi, hideCategoryApi, deleteCategoryApi } from '@/mockData/category'
+// import { getCategoryListApi, addCategoryApi, showCategoryApi, hideCategoryApi, deleteCategoryApi } from '@/mockData/category'
+import { getCategoryListApi, addCategoryApi, showCategoryApi, hideCategoryApi, deleteCategoryApi} from '@/api/categoryApi'
 export default {
   name: 'category',
   data () {
@@ -106,9 +107,10 @@ export default {
       this.showAddModal = true
     },
     confirmAddCategory () {
-      addCategoryApi({ id: this.updateId, category: this.newCategory }).then(() => {
-        this.$message.success({ content: '新增成功' })
+      addCategoryApi({ id: this.updateId, category: this.newCategory }).then(res => {
+        this.$message.success({ content: res.msg })
         this.showAddModal = false
+        this.getCategoryList()
       })
     },
     showCategory (category) {
@@ -116,8 +118,8 @@ export default {
       this.$confirm({
         content: '确认上架此分类吗？',
         onOk () {
-          showCategoryApi({ id: category.id }).then(() => {
-            that.$message.success({ content: '操作成功' })
+          showCategoryApi({ id: category.id }).then(res => {
+            that.$message.success({ content: res.msg })
             that.getCategoryList()
           })
         }
@@ -129,8 +131,8 @@ export default {
       this.$confirm({
         content: '确认下架此分类吗？',
         onOk () {
-          hideCategoryApi({ id: category.id }).then(() => {
-            that.$message.success({ content: '操作成功' })
+          hideCategoryApi({ id: category.id }).then(res => {
+            that.$message.success({ content: res.msg })
             that.getCategoryList()
           })
         }
@@ -139,10 +141,11 @@ export default {
     deleteCategory (category) {
       let that = this
       this.$confirm({
-        content: '确认删除此分类',
-        onOK () {
-          deleteCategoryApi({ id: category.id }).then(() => {
-            that.$message.success({ content: '操作成功' })
+        content: '确认删除分类:' + category.category,
+        onOk () {
+          console.log(9999, category)
+          deleteCategoryApi({ id: category.id }).then(res => {
+            that.$message.success({ content: res.msg })
             that.getCategoryList()
           })
         }
