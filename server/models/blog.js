@@ -55,6 +55,16 @@ export default (sequelize, DataTypes) => sequelize.define('t_blog', {
     field: 'read_num',
     allowNull: false
   },
+  likeNum: {
+    type: DataTypes.INTEGER(),
+    field: 'like_num',
+    allowNull: false
+  },
+  dislikeNum: {
+    type: DataTypes.INTEGER(),
+    field: 'dislike_num',
+    allowNull: false
+  },
   createTime: {
     type: DataTypes.DATE(),
     field: 'c_time'

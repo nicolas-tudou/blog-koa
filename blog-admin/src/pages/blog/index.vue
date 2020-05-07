@@ -83,7 +83,8 @@ import { blogColumns } from '@/columns/blogColumns'
 
 import { getUserListApi } from '@/mockData/user'
 import { getCategoryListApi } from '@/mockData/category'
-import { getBlogListApi, hideBlogApi, showBlogApi, deleteBlogApi } from '@/mockData/blog'
+// import { getBlogListApi, hideBlogApi, showBlogApi, deleteBlogApi } from '@/mockData/blog'
+import { getBlogListApi, hideBlogApi, showBlogApi, deleteBlogApi } from '@/api/blogApi'
 
 import { blogStatus, blogStatusMap } from '@/config/status'
 export default {

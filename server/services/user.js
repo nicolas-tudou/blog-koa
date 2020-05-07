@@ -1,10 +1,13 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { User } from '../models'
+import { User, Blog } from '../models'
 import { Op } from 'sequelize'
 
 export default class UserServer {
   static async getOne (name) {
     return User.findOne({
+      attributes: {
+        exclude: ['c_time', 'u_time']
+      },
       where: {
         name
       }
@@ -12,6 +15,13 @@ export default class UserServer {
   }
   static async getUserList (name, identify, status) {
     return User.findAndCountAll({
+      include: {
+        model: Blog,
+        attributes: ['auth_id']
+      },
+      attributes: {
+        exclude: ['c_time', 'u_time']
+      },
       where: {
         [Op.and]: [
           {

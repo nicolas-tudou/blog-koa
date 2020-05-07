@@ -96,6 +96,7 @@ export default class user {
     let { name, identify, status} = ctx.request.body
     try {
       let userData = await UserServer.getUserList(name, identify, status)
+      console.log('--->>', userData)
       ctx.body = {
         success: true,
         data: {
@@ -104,6 +105,7 @@ export default class user {
         }
       }
     } catch(err) {
+      console.log(err)
       ctx.body = {
         success: false,
         errorCode: errCode.NETWORK_ERROR,

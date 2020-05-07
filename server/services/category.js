@@ -1,4 +1,4 @@
-import { Category } from '../models'
+import { Category, Blog } from '../models'
 import { Op } from 'sequelize'
 
 export default class CategoryService {
@@ -19,6 +19,13 @@ export default class CategoryService {
   }
   static async getCategoryList(name, status) {
     return Category.findAndCountAll({
+      include: {
+        model: Blog,
+        attributes: ['category_id']
+      },
+      attributes: {
+        exclude: ['c_time', 'u_time']
+      },
       where: {
         [Op.and]: [
           {

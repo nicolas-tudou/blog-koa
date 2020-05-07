@@ -22,13 +22,5 @@ export default (sequelize, DataTypes) => sequelize.define('t_tag_blog', {
     type: DataTypes.INTEGER(),
     filed: 'blog_id',
     allowNull: false
-  },
-  createTime: {
-    type: DataTypes.DATE(),
-    filed: 'c_time'
-  },
-  updateTime: {
-    type: DataTypes.DATE(),
-    filed: 'u_time'
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_blog_tag' })
+}, { tableName: 't_tag_blog' })

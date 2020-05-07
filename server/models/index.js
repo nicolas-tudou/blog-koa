@@ -7,31 +7,31 @@ export const Comment = sequelize.import(__dirname + '/comment.js')
 export const Tag = sequelize.import(__dirname + '/tag.js')
 export const TagBlog = sequelize.import(__dirname + '/tagBlog.js')
 
-User.hasOne(Blog, {
+User.hasMany(Blog, {
   foreignKey: 'auth_id',
   targetKey: 'id'
 })
 Blog.belongsTo(User, {
   foreignKey: 'auth_id',
-  targetKey: 'id'
+  sourceKey: 'id'
 })
 
-Category.hasOne(Blog, {
+Category.hasMany(Blog, {
   foreignKey: 'category_id',
   targetKey: 'id'
 })
 Blog.belongsTo(Category, {
   foreignKey: 'category_id',
-  targetKey: 'id'
+  sourceKey: 'id'
 })
 
-Blog.hasOne(Comment, {
+Blog.hasMany(Comment, {
   foreignKey: 'blog_id',
   targetKey: 'id'
 })
 Comment.belongsTo(Blog, {
   foreignKey: 'blog_id',
-  targetKey: 'id'
+  sourceKey: 'id'
 })
 
 Tag.belongsToMany(Blog, {

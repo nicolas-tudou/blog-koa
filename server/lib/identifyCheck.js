@@ -2,7 +2,7 @@ import errCode from '../config/errorCode'
 import identifyMap from '../config/identify'
 
 export default (identify) => (ctx, next) => {
-  if (ctx.state.user.data.identify !== identifyMap.ADMIN) {
+  if (identify < ctx.state.user.data.identify) {
     ctx.body = {
       success: false,
       errorCode: errCode.IDENTIFY_ERROR,

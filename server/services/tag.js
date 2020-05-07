@@ -1,4 +1,4 @@
-import { Tag } from '../models'
+import { Tag, Blog } from '../models'
 import { Op } from 'sequelize'
 
 export default class TagService {
@@ -10,6 +10,13 @@ export default class TagService {
   }
   static async getTagList(name, status) {
     return Tag.findAndCountAll({
+      include: {
+        model: Blog,
+        attributes: ['id']
+      },
+      attributes: {
+        exclude: ['c_time', 'u_time']
+      },
       where: {
         [Op.and]: [
           {
