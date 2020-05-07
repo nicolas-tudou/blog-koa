@@ -9,9 +9,9 @@ export default router => {
   router.post('/api/category/set/hide', jwt, category.hideCategory)
   router.post('/api/category/set/delete', jwt, category.deleteCategory)
 
-  router.post('api/tag/add', jwt, tag.createTag)
-  router.post('api/tag/query/list', tag.getTagList)
-  router.post('api/tag/show', jwt, tag.showTag)
-  router.post('api/tag/hide', jwt, tag.hideTag)
-  router.post('api/tag/delete', jwt, tag.deleteTag)
+  router.post('/api/tag/add', jwt, tag.createTag)
+  router.post('/api/tag/query/list', tag.getTagList)
+  router.post('/api/tag/set/show', jwt, tag.showTag)
+  router.post('/api/tag/set/hide', jwt, tag.hideTag)
+  router.post('/api/tag/set/delete', jwt, tag.deleteTag)
 }

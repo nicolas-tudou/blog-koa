@@ -8,13 +8,25 @@
       justify-content: flex-start;
       align-items: center;
       margin-bottom: 10px;
-      &.none-bottom {
-        margin-bottom: 0;
-      }
       label {
         width: 100px;
         padding-right: 10px;
         text-align-last: justify;
+      }
+      .blog-logo-box {
+        position: relative;
+        height: 102px;
+        .blog-logo {
+          width: auto;
+          height: 100%;
+          // border-radius: 8px;
+        }
+        .delete-icon {
+          position: absolute;
+          top: 0;
+          right: 0;
+          transform: translate3d(50%,-50%,0);
+        }
       }
     }
   }
@@ -25,5 +37,10 @@
   .detail-comment {
     overflow: auto;
     max-height: 560px;
+  }
+  .preview-box {
+    width: 100%;
+    max-width: 80vw;
+    padding: 20px 0;
   }
 }

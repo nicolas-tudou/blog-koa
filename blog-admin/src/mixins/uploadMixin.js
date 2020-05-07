@@ -3,19 +3,12 @@ export default {
     return {
       showPreviewImg: false,
       imgUploadHeader: {
-        token: ''
+        Authorization: 'Bearer ' + localStorage.getItem('token') || ''
       }
     }
   },
   methods: {
-    beforeUpload (e) {
-      console.log(e)
-    },
-    uploadImage (e) {
-      console.log(e)
-    },
-    previewImage (e) {
-      console.log(e)
+    previewImage () {
       this.showPreviewImg = true
     },
     cancelPreview () {

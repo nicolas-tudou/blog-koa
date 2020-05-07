@@ -1,7 +1,7 @@
 export const tagColumns = [
   {
     title: '名称',
-    dataIndex: 'tagName',
+    dataIndex: 'tag',
     align: 'center'
   },
   {

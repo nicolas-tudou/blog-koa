@@ -64,8 +64,7 @@ export const tagStatusMap = {
 export const userStatusMap = {
   normal: 1,
   lock: 2,
-  hide: 3,
-  deleted: 4
+  deleted: 3
 }
 
 
@@ -79,12 +78,8 @@ export const userStatus = [
     value: 2
   },
   {
-    label: '已失效',
-    value: 3
-  },
-  {
     label: '已删除',
-    value: 4
+    value: 3
   }
 ]
 

@@ -42,8 +42,14 @@
       </template>
     </a-table>
     <a-modal :visible="showAddModal" @ok="confirmAddTag" @cancel="() => showAddModal = false">
-      <label>标签名称：</label>
-      <a-input style="width: 120px;" placeholder="标签名" v-model="newTag" />
+      <div>
+        <label>标签名称：</label>
+        <a-input style="width: 120px;" placeholder="标签名" v-model="newTag.name" />
+      </div>
+      <div style="margin-top: 20px;">
+        <label style="margin-top: 20px;">标签颜色：</label>
+        <a-input style="width: 120px;" placeholder="标签颜色" v-model="newTag.color" />
+      </div>
     </a-modal>
   </div>
 </template>
@@ -52,7 +58,8 @@
 import { tagStatus, tagStatusMap } from '@/config/status'
 import { tagColumns } from '@/columns/tagColumns'
 
-import { getTagListApi, addTagApi, showTagApi, hideTagApi, deleteTagApi } from '@/mockData/tag'
+// import { getTagListApi, addTagApi, showTagApi, hideTagApi, deleteTagApi } from '@/mockData/tag'
+import { getTagListApi, addTagApi, showTagApi, hideTagApi, deleteTagApi } from '@/api/tagApi'
 export default {
   name: 'tag',
   data () {
@@ -67,7 +74,10 @@ export default {
         status: -1
       },
       updateId: '',
-      newTag: '',
+      newTag: {
+        name: '',
+        color: ''
+      },
       tagList: []
     }
   },
@@ -101,14 +111,22 @@ export default {
       this.getTagList()
     },
     addNewTag () {
-      this.newTag = ''
+      this.newTag = {
+        name: '',
+        color: ''
+      }
       this.updateId = ''
       this.showAddModal = true
     },
     confirmAddTag () {
-      addTagApi({ id: this.updateId, tag: this.newTag }).then(() => {
+      if (!this.newTag.name) {
+        this.$message.warning({ content: '标签名称不能为空' })
+        return
+      }
+      addTagApi({ id: this.updateId, tag: this.newTag.name, color: this.newTag.color }).then(() => {
         this.$message.success({ content: '新增成功' })
         this.showAddModal = false
+        this.getTagList()
       })
     },
     showTag (tag) {

@@ -15,20 +15,21 @@
           <a-select-option v-for="category in categoryList" :key="category.id" :value="category.id">{{category.category}}</a-select-option>
         </a-select>
       </div>
-      <div class="info-item none-bottom">
+      <div class="info-item">
         <label>博客LOGO：</label>
+        <div class="blog-logo-box" v-if="blog.logo" @click="previewImage">
+          <a-icon type="close-circle-fill" spin class="delete-icon" @click.stop="removeLogo" />
+          <img class="blog-logo" :src="blog.logo" />
+        </div>
         <a-upload
-          action="/api/common/upload/img"
+          v-else
+          action="/api/common/upload/image"
           listType="picture-card"
           accept="image/*"
-          :fileList="fileList"
           :headers="imgUploadHeader"
-          :remove="removeLogo"
-          @preview="previewImage"
-          @beforeUpload="beforeUpload"
           @change="logoChange"
         >
-          <div v-if="!blog.logo">
+          <div>
             <a-icon type="plus" />
             <div class="ant-upload-text">上传</div>
           </div>
@@ -62,8 +63,10 @@
     <div class="detail-comment">
       <comment-item v-for="comment in commentList" :key="comment.id" :comment="comment" />
     </div>
-    <a-modal v-model="showPreviewImg" :footer="null" @cancel="cancelPreview">
-      <img style="width: 80%;" :src="blog.logo" />
+    <a-modal v-model="showPreviewImg" :closable="false" :footer="null" @cancel="cancelPreview">
+      <div class="preview-box">
+        <img style="width: 100%;" :src="blog.logo" />
+      </div>
     </a-modal>
   </div>
 </template>
@@ -96,11 +99,10 @@ export default {
       blog: {
         id: '',
         title: '',
-        logo: '',
+        logo: 'http://localhost:3000/upload/image/2020/5/menu_logo.1588525368122.jpeg',
         brief: '',
         detail: '',
-        tags: [],
-        comment: []
+        tags: []
       }
     }
   },
@@ -150,11 +152,13 @@ export default {
       console.log('tagsChange', e)
     },
     logoChange (e) {
-      console.log(99, e.fileList[0])
+      if (e.file.status === 'done') {
+        console.log(e.file)
+        this.$message.success({ content: e.file.response.data.msg })
+        this.blog.logo = e.file.response.data.imgUrl
+      }
     },
-    removeLogo (file) {
-      console.log(file)
-      this.fileList = []
+    removeLogo () {
       this.blog.logo = ''
     },
     editorChange (e) {

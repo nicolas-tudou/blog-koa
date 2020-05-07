@@ -1,9 +1,3 @@
-import Sequelize, { STRING } from "sequelize"
-import sequelize from '../lib/sequelize'
-import category from './category'
-import tagBlog from './tagBlog'
-import tag from './tag'
-import user from './user'
 /**
  * CREATE table IF NOT EXISTS t_blog(
     id BIGINT(20) PRIMARY KEY auto_increment,
@@ -20,69 +14,59 @@ import user from './user'
     status int(1) default 1 comment "文章状态：1-正常 2-下架 3-已删除"
     );
  */
-const blog = sequelize.define('t_blog', {
+export default (sequelize, DataTypes) => sequelize.define('t_blog', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'id',
     primaryKey: true
   },
   title: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'title',
     allowNull: false
   },
   categoryId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'category_id',
     allowNull: false
   },
   authId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'auth_id',
     allowNull: false
   },
   logo: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'logo',
     allowNull: false
   },
   brief: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'brief',
     allowNull: false
   },
   detail: {
-    type: Sequelize.TEXT,
+    type: DataTypes.TEXT(),
     field: 'detail',
     allowNull: false
   },
   readNum: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'read_num',
     allowNull: false
   },
   createTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'c_time'
   },
   updateTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'u_time'
   },
   status: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'status',
     allowNull: false,
     default: 1
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time' })
-
-blog.belongsTo(category, { foreignKey: 'category_id' })
-blog.belongsTo(user, {foreignKey: 'auth_id'})
-
-blog.belongsToMany(tag, {
-  through: tagBlog,
-  foreignKey: 'blog_id'
-})
-
-export default blog
+}, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_blog' })

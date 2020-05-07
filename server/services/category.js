@@ -1,66 +1,54 @@
-import category from '../models/category'
-import sequelize from 'sequelize'
-const Op = sequelize.Op
-export default class Category {
+import { Category } from '../models'
+import { Op } from 'sequelize'
+
+export default class CategoryService {
   static async getOne(categoryName) {
-    return category.findOne({
+    return Category.findOne({
       where: {
         category: categoryName
       }
     })
   }
   static async createCategory(categoryName) {
-    return category.create({
+    return Category.create({
       category: categoryName
     })
   }
   static async updateCategory(id, categoryName) {
-    return category.update({ category: categoryName }, { where: { id } })
+    return Category.update({ category: categoryName }, { where: { id } })
   }
   static async getCategoryList(name, status) {
-    if (status === -1) {
-      console.log('---->', status)
-      return category.findAndCountAll({
-        where: {
-          category: {
-            [Op.like]: `%${name}%`
-          }
-        },
-        order: [
-          ['blog_num', 'DESC']
-        ]
-      })
-    } else {
-      return category.findAndCountAll({
-        where: {
-          [Op.and]: [
-            {
-              category: {
-                [Op.like]: `%${name}%`
-              }
-            },
-            {
-              status
+    return Category.findAndCountAll({
+      where: {
+        [Op.and]: [
+          {
+            category: {
+              [Op.like]: `%${name}%`
             }
-          ]
-        }
-      })
-    }
+          },
+          {
+            status: status == -1 ? {
+              [Op.notIn]: [-1]
+            } : status
+          }
+        ]
+      }
+    })
   }
   static async getCount(status) {
     if (status > 0) {
-      return category.count({ where: { status } })
+      return Category.count({ where: { status } })
     } else {
-      return category.count()
+      return Category.count()
     }
   }
   static async hideCategory(categoryId) {
-    return category.update({ status: 2 }, { where: { id: categoryId }})
+    return Category.update({ status: 2 }, { where: { id: categoryId }})
   }
   static async showCategory(categoryId) {
-    return category.update({ status: 1 }, { where: { id: categoryId }})
+    return Category.update({ status: 1 }, { where: { id: categoryId }})
   }
   static async deleteCategory(categoryId) {
-    return category.update({ status: 3 }, { where: { id: categoryId }})
+    return Category.update({ status: 3 }, { where: { id: categoryId }})
   }
 }

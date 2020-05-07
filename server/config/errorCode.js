@@ -6,6 +6,9 @@ export default {
   PARAM_EMPTY: 602,
   PARAM_ERROR: 603,
 
+  // user
+  USER_EXISTS: 721,
+
   // category
   CATEGORY_EXISTS: 701,
 

@@ -22,7 +22,7 @@ export default class tag {
     }
     try {
       if (id) {
-        await Tag.update(id,tag, color)
+        await Tag.updateTag(id, tag, color)
         ctx.body = {
           success: true,
           data: {
@@ -31,7 +31,7 @@ export default class tag {
         }
         return
       }
-      await Tag.create(tag, color)
+      await Tag.createTag(tag, color)
       ctx.body = {
         success: true,
         data: {
@@ -40,6 +40,7 @@ export default class tag {
       }
       return
     } catch (err) {
+      console.log(err)
       ctx.body = {
         success: false,
         errorCode: errCode.NETWORK_ERROR,
@@ -49,13 +50,15 @@ export default class tag {
     }
   }
   static async getTagList (ctx) {
-    let { id } = ctx.request.body
+    let { name, status } = ctx.request.body
     try {
-      await Category.hideCategory(id)
+      console.log(999, name, status)
+      let data = await Tag.getTagList(name, status)
       ctx.body = {
         success: true,
         data: {
-          msg: '分类下架成功'
+          count: data.count,
+          list: data.rows
         }
       }
       return

@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-import sequelize from '../lib/sequelize'
-
 /**
  * CREATE table IF NOT EXISTS t_blog_tag(
     id BIGINT(20) PRIMARY KEY auto_increment,
@@ -10,28 +7,28 @@ import sequelize from '../lib/sequelize'
     u_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
  */
-export default sequelize.define('t_tag_blog', {
+export default (sequelize, DataTypes) => sequelize.define('t_tag_blog', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     filed: 'id',
     primaryKey: true
   },
   tagId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     filed: 'tag_id',
     allowNull: false
   },
   blogId: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     filed: 'blog_id',
     allowNull: false
   },
   createTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     filed: 'c_time'
   },
   updateTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     filed: 'u_time'
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time' })
+}, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_blog_tag' })

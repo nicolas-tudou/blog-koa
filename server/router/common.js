@@ -1,10 +1,7 @@
-import blog from '../controller/blog'
-import category from '../controller/category'
-import tag from '../controller/tag'
-import comment from '../controller/comment'
+import jwt from '../lib/jwt'
+import ImgUpload from '../controller/imgUpload'
+import multer from '../lib/multer'
 
 export default router => {
-  router.post('/test', (req, res) => {
-    res.send('hello world, test code')
-  })
+  router.post('/api/common/upload/image', jwt, multer, ImgUpload.uploaded)
 }

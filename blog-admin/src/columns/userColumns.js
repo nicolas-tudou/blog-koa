@@ -1,7 +1,7 @@
 export const userColumns = [
   {
     title: '用户名',
-    dataIndex: 'userName',
+    dataIndex: 'name',
     align: 'center'
   },
   {

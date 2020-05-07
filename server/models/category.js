@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-import sequelize from '../lib/sequelize'
-
 /**
  * id BIGINT(20) PRIMARY KEY auto_increment,
     category VARCHAR(20) not null,
@@ -10,32 +7,32 @@ import sequelize from '../lib/sequelize'
     status int(1) not NULL DEFAULT 1 comment "分类状态：1-正常 2-下架 3-已删除"
  */
 
-export default sequelize.define('t_category', {
+export default (sequelize, DataTypes) => sequelize.define('t_category', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'id',
     primaryKey: true
   },
   category: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'category',
     allowNull: false
   },
   blogNum: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'blog_num',
     default: 0
   },
   createTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'c_time'
   },
   updateTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'u_time'
   },
   status: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'status',
     default: 1
   }

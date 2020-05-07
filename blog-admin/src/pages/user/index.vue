@@ -22,7 +22,7 @@
       <div class="filter-item">
         <a-button type="primary" :loading="tableLoading" @click="queryUser">查询</a-button>
         <a-button style="margin-left: 20px;" @click="resetQuery">重置</a-button>
-        <a-button style="margin-left: 20px;" @click="addNewUser">新增用户</a-button>
+        <!-- <a-button style="margin-left: 20px;" @click="addNewUser">新增用户</a-button> -->
       </div>
     </div>
     <a-table
@@ -41,15 +41,14 @@
       </template>
       <template #userStatus="text">
         <a-badge v-if="+text === userStatusMap.normal" status="success" text="正常" />
-        <a-badge v-if="+text === userStatusMap.lock" status="processing" text="正常" />
-        <a-badge v-if="+text === userStatusMap.hide" status="warning" text="已下架" />
+        <a-badge v-if="+text === userStatusMap.lock" status="processing" text="锁定" />
         <a-badge v-if="+text === userStatusMap.deleted" status="default" text="已删除" />
       </template>
       <template #operation="text, record">
         <div class="operation-btn">
-          <a-button type="primary" @click="toEditUser(record)">编辑</a-button>
-          <a-button v-if="record.status === userStatusMap.lock" type="primary" @click="unLockUser(record)">解除锁定</a-button>
-          <a-button v-if="record.status !== userStatusMap.lock" type="primary" @click="lockUser(record)">锁定</a-button>
+          <!-- <a-button type="primary" @click="toEditUser(record)">编辑</a-button> -->
+          <a-button v-if="record.status !== userStatusMap.normal" type="primary" @click="unLockUser(record)">恢复</a-button>
+          <a-button v-if="record.status === userStatusMap.normal" type="primary" @click="lockUser(record)">锁定</a-button>
           <a-button v-if="record.status !== userStatusMap.deleted" @click="deleteUser(record)">删除</a-button>
         </div>
       </template>
@@ -71,7 +70,8 @@
 import { userStatusMap, userStatus, identifyOptions, identifyMap } from '@/config/status'
 import { userColumns } from '@/columns/userColumns'
 
-import { getUserListApi, addUserApi, deleteUserApi, lockUserApi, unLockUserApi } from '@/mockData/user'
+// import { getUserListApi, addUserApi, deleteUserApi, lockUserApi, unLockUserApi } from '@/mockData/user'
+import { getUserListApi, addUserApi, deleteUserApi, lockUserApi, unLockUserApi } from '@/api/userApi'
 export default {
   name: 'user',
   data () {
@@ -114,7 +114,7 @@ export default {
     toEditUser (user) {
       this.newUser = {
         id: user.id,
-        name: user.userName,
+        name: user.name,
         identify: user.identify
       }
       this.showAddModal = true
@@ -177,7 +177,7 @@ export default {
       let that = this
       this.$confirm({
         content: '确认删除此用户',
-        onOK () {
+        onOk () {
           deleteUserApi({ id: user.id }).then(() => {
             that.$message.success({ content: '操作成功' })
             that.getUserList()

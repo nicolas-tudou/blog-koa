@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-import sequelize from '../lib/sequelize'
-import blog from './blog'
 /**
  * CREATE table IF NOT EXISTS t_comment(
     id BIGINT(20) PRIMARY KEY auto_increment,
@@ -13,47 +10,43 @@ import blog from './blog'
     u_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP on UPDATE CURRENT_TIMESTAMP
     );
  */
-const comment = sequelize.define('t_user', {
+export default (sequelize, DataTypes) => sequelize.define('t_user', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'id',
     primaryKey: true
   },
   blogId: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'blog_id',
     allowNull: false
   },
   parent: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'parent',
     allowNull: false
   },
   comment: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'comment',
     allowNull: false
   },
   user: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'user',
     allowNull: false
   },
   userAvatar: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'user_avatar',
     allowNull: false
   },
   createTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'c_time'
   },
   updateTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'u_time'
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time' })
-
-comment.belongsTo(blog, { foreignKey: 'blog_id' })
-
-export default comment
+}, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_comment' })

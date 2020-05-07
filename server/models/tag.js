@@ -1,7 +1,3 @@
-import Sequelize from 'sequelize'
-import sequelize from '../lib/sequelize'
-import blog from './blog'
-import tagblog from 'tagBlog'
 /**
  * CREATE table IF NOT EXISTS t_tag(
     id BIGINT(20) PRIMARY KEY not NULL,
@@ -11,39 +7,33 @@ import tagblog from 'tagBlog'
     status int(1) not NULL DEFAULT 1 comment "分类状态：1-正常 2-下架 3-已删除"
     );
  */
-export default sequelize.define('t_tag', {
+export default (sequelize, DataTypes) => sequelize.define('t_tag', {
   id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'id',
     primaryKey: true
   },
   tag: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'tag',
     allowNull: false
   },
   color: {
-    type: Sequelize.STRING,
+    type: DataTypes.STRING(),
     field: 'color',
-    allowNull: false
+    defaultValue: '#108ee9'
   },
   createTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'c_time'
   },
   updateTime: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE(),
     field: 'u_time'
   },
   status: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER(),
     field: 'status',
-    allowNull: false,
     default: 1
   }
-}, { createdAt: 'c_time', updatedAt: 'u_time', tablename: 't_tag' })
-
-tag.belongsToMany(blog, {
-  through: tagBlog,
-  foreignKey: 'tag_id'
-})
+}, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_tag' })
