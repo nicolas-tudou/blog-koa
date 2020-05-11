@@ -23,8 +23,8 @@ export default router => {
   // blog
   router.post('/api/blog/query/list', blog.getBlogList)
   router.post('/api/blog/query/detail', blog.getBlogDetail)
-  router.post('/api/blog/add', jwt, identifyCheck(identify.MANAGE), blog.createNewBlog)
-  router.post('/api/blog/update', jwt, identifyCheck(identify.MANAGE), blog.updateBlog)
+  router.post('/api/blog/set/add', jwt, identifyCheck(identify.MANAGE), blog.createNewBlog)
+  router.post('/api/blog/set/update', jwt, identifyCheck(identify.MANAGE), blog.updateBlog)
   router.post('/api/blog/set/show', jwt, identifyCheck(identify.ADMIN), blog.showBlog)
   router.post('/api/blog/set/hide', jwt, identifyCheck(identify.ADMIN), blog.hideBlog)
   router.post('/api/blog/set/delete', jwt, identifyCheck(identify.ADMIN), blog.deleteBlog)

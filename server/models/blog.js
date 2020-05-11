@@ -53,17 +53,17 @@ export default (sequelize, DataTypes) => sequelize.define('t_blog', {
   readNum: {
     type: DataTypes.INTEGER(),
     field: 'read_num',
-    allowNull: false
+    defaultValue: 0
   },
   likeNum: {
     type: DataTypes.INTEGER(),
     field: 'like_num',
-    allowNull: false
+    defaultValue: 0
   },
   dislikeNum: {
     type: DataTypes.INTEGER(),
     field: 'dislike_num',
-    allowNull: false
+    defaultValue: 0
   },
   createTime: {
     type: DataTypes.DATE(),
@@ -76,7 +76,6 @@ export default (sequelize, DataTypes) => sequelize.define('t_blog', {
   status: {
     type: DataTypes.INTEGER(),
     field: 'status',
-    allowNull: false,
     default: 1
   }
 }, { createdAt: 'c_time', updatedAt: 'u_time', tableName: 't_blog' })

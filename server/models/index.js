@@ -36,11 +36,9 @@ Comment.belongsTo(Blog, {
 
 Tag.belongsToMany(Blog, {
   through: TagBlog,
-  foreignKey: 'tag_id',
-  sourceKey: 'id'
+  foreignKey: 'tag_id'
 })
 Blog.belongsToMany(Tag, {
   through: TagBlog,
-  foreignKey: 'blog_id',
-  sourceKey: 'id'
+  foreignKey: 'blog_id'
 })

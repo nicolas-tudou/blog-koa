@@ -8,19 +8,14 @@
     );
  */
 export default (sequelize, DataTypes) => sequelize.define('t_tag_blog', {
-  id: {
-    type: DataTypes.INTEGER(),
-    filed: 'id',
-    primaryKey: true
-  },
-  tagId: {
+  tag_id: {
     type: DataTypes.INTEGER(),
     filed: 'tag_id',
     allowNull: false
   },
-  blogId: {
+  blog_id: {
     type: DataTypes.INTEGER(),
     filed: 'blog_id',
     allowNull: false
   }
-}, { tableName: 't_tag_blog' })
+}, { timestamps: false, tableName: 't_tag_blog' })

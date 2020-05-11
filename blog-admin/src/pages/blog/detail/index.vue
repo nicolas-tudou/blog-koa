@@ -42,8 +42,8 @@
           mode="multiple"
           showArrow
           placeholder="请选择标签"
-          :defaultValue="defaultTags"
-          :change="tagsChange"
+          :value="selectTags"
+          @change="tagsChange"
           optionLabelProp="label"
         >
           <a-select-option
@@ -52,10 +52,11 @@
             :value="tag.id"
             :label="tag.id"
             >
-              <a-tag :color="tag.color" :ariaLabel="tag.id">{{tag.tagName}}</a-tag>
+              <a-tag :color="tag.color" :ariaLabel="tag.id">{{tag.tag}}</a-tag>
             </a-select-option>
         </a-select>
       </div>
+      <a-button :loading="loading" type="primary" @click="saveBlog">保存</a-button>
     </div>
     <div class="detail-content">
       <editor :options="{ value: blog.detail }" @change="editorChange" @load="editorLoad" />
@@ -77,10 +78,15 @@ import commentItem from '@/components/commentItem'
 
 import uploadMixin from '@/mixins/uploadMixin'
 
-import { getBlogDetailApi } from '@/mockData/blog'
-import { getCategoryListApi } from '@/mockData/category'
-import { getTagListApi } from '@/mockData/tag'
-import { getCommentApi } from '@/mockData/comment'
+// import { getBlogDetailApi } from '@/mockData/blog'
+// import { getCategoryListApi } from '@/mockData/category'
+// import { getTagListApi } from '@/mockData/tag'
+// import { getCommentApi } from '@/mockData/comment'
+
+import { getBlogDetailApi, addNewBlogApi, updateBlogApi } from '@/api/blogApi'
+import { getCategoryListApi } from '@/api/categoryApi'
+import { getTagListApi } from '@/api/tagApi'
+import { getCommentApi } from '@/api/commentApi'
 
 export default {
   name: 'blogDetail',
@@ -91,15 +97,16 @@ export default {
   },
   data () {
     return {
+      loading: false,
       fileList: [],
       categoryList: [],
       commentList: [],
       tagList: [],
-      defaultTags: [],
       blog: {
         id: '',
         title: '',
-        logo: 'http://localhost:3000/upload/image/2020/5/menu_logo.1588525368122.jpeg',
+        categoryId: '',
+        logo: '',
         brief: '',
         detail: '',
         tags: []
@@ -113,6 +120,19 @@ export default {
     }
     this.getCategoryList()
     this.getTagList()
+  },
+  computed: {
+    selectTags () {
+      let res = []
+      this.blog.tags.forEach(id => {
+        this.tagList.forEach(tag => {
+          if (tag.id === id) {
+            res.push(tag.tag)
+          }
+        })
+      })
+      return res
+    }
   },
   methods: {
     getBlogDetail () {
@@ -149,7 +169,7 @@ export default {
       })
     },
     tagsChange (e) {
-      console.log('tagsChange', e)
+      this.blog.tags = e
     },
     logoChange (e) {
       if (e.file.status === 'done') {
@@ -163,9 +183,30 @@ export default {
     },
     editorChange (e) {
       console.log('-----', e)
+      this.blog.detail = e
     },
     editorLoad (e) {
       console.log('=====', e)
+    },
+    validataBlog () {
+      let checkProps = ['title', 'brief', 'logo', 'categoryId', 'detail']
+      return checkProps.every(prop => this.blog[prop])
+    },
+    saveBlog () {
+      if (!this.validataBlog()) {
+        this.$message.warning({ content: '请补充完整博客信息，再次提交' })
+        return
+      }
+      this.blog.authId = JSON.parse(localStorage.getItem('user')).id
+      if (this.$route.query.id) {
+        updateBlogApi(this.blog).then(res => {
+          console.log('update blog:', res)
+        })
+      } else {
+        addNewBlogApi(this.blog).then(res => {
+          console.log('add new blog:', res)
+        })
+      }
     }
   }
 }

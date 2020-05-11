@@ -4,14 +4,34 @@ export const getBlogListApi = (data) => {
   return Post('/blog/query/list', data)
 }
 
-export const hideBlogApi = (data) => {
-  return Post('/blog/set/hide', data)
+export const getBlogDetailApi = (data) => {
+  return Post('/blog/query/detail', data)
+}
+
+export const addNewBlogApi = (data) => {
+  return Post('/blog/set/add', data)
+}
+
+export const updateBlogApi = (data) => {
+  return Post('/blog/set/update', data)
 }
 
 export const showBlogApi = (data) => {
   return Post('/blog/set/show', data)
 }
 
+export const hideBlogApi = (data) => {
+  return Post('/blog/set/hide', data)
+}
+
 export const deleteBlogApi = (data) => {
   return Post('/blog/set/delete', data)
+}
+
+export const likeBlogApi = (data) => {
+  return Post('/blog/set/like', data)
+}
+
+export const ddislikeBlogApi = (data) => {
+  return Post('/blog/set/dislike', data)
 }

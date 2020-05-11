@@ -1,10 +1,10 @@
-import { Blog, User, Category, Tag } from '../models'
+import { Blog, User, Category, Tag, TagBlog, Comment } from '../models'
 import { Op } from 'sequelize'
 import BLog from '../controller/blog'
 
 export default class blogService {
-  static async createNewBlog(...params) {
-    return Blog.create({ ...params })
+  static async createNewBlog(title, logo, brief, authId, categoryId, tags, detail) {
+    return Blog.create({ title, logo, brief, authId, categoryId, detail })
   }
   static async updateBlog(id, ...params) {
     return BLog.update({ ...params }, { where: id })
@@ -27,15 +27,19 @@ export default class blogService {
       include: [
         {
           model: User,
-          attributes: ['id']
+          attributes: ['id', 'name']
         },
         {
           model: Tag,
           attributes: ['id']
         },
         {
-          model: Category,
+          model: Comment,
           attributes: ['id']
+        },
+        {
+          model: Category,
+          attributes: ['id', 'category']
         }
       ],
       where: {
@@ -45,8 +49,12 @@ export default class blogService {
               [Op.like]: `%${title}%`
             }
           },
-          { categoryId },
-          { authId },
+          {
+            categoryId: categoryId === -1 ? { [Op.notIn]: [categoryId] } : categoryId
+          },
+          {
+            authId: authId === -1 ? { [Op.notIn]: [authId] } : authId
+          },
           {
             status: status === -1 ? { [Op.notIn]: [status] } : status
           }

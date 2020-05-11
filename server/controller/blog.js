@@ -1,4 +1,5 @@
 import blogService from '../services/blog'
+import TagBLogService from '../services/tagBlog'
 import errCode from '../config/errorCode'
 
 export default class BLog {
@@ -7,12 +8,14 @@ export default class BLog {
     let {
       title,
       logo,
+      brief,
       categoryId,
       tags,
       detail,
       authId
     } = body
-    if (!title || !logo || !categoryId || !tags.length || !authId || !detail) {
+    console.log(title, logo, brief, categoryId, detail, authId)
+    if (!title || !logo || !categoryId || !authId || !detail) {
       ctx.body = {
         success: false,
         errorCode: errCode.BLOG_INFO_ERROR,
@@ -21,8 +24,12 @@ export default class BLog {
       return
     }
     try {
-      let blog = await blogService.createBlog(title, logo, authId, categoryId, tags, detail)
-      console.log(blog)
+      let blog = await blogService.createNewBlog(title, logo, brief, authId, categoryId, tags || [], detail)
+      console.log(99, blog[null])
+      let blogId = blog[null]
+      if (tags || tags.length) {
+        tags.forEach(async id => await TagBLogService.create(id, blogId))
+      }
       ctx.body = {
         success: true,
         data: {
@@ -31,6 +38,7 @@ export default class BLog {
       }
       return
     } catch (err) {
+      console.log(err)
       ctx.body = {
         success: false,
         errorCode: errCode.NETWORK_ERROR,
@@ -44,12 +52,13 @@ export default class BLog {
       id,
       title,
       logo,
+      brief,
       categoryId,
       tags,
       detail,
       authId
     } = body
-    if (!title || !logo || !categoryId || !tags.length || !authId || !detail) {
+    if (!title || !logo || !brief || !categoryId || !authId || !detail) {
       ctx.body = {
         success: false,
         errorCode: errCode.BLOG_INFO_ERROR,
@@ -58,8 +67,12 @@ export default class BLog {
       return
     }
     try {
-      let blog = await blogService.updateBlog(id, title, logo, authId, categoryId, tags, detail)
+      let blog = await blogService.updateBlog(id, title, logo, brief, authId, categoryId, tags, detail)
       console.log(blog)
+      await TagBLogService.clear(-1, id)
+      if (tags && tags.length) {
+        tags.forEach(async tagId => await TagBLogService.create(tagId, id)) 
+      }
       ctx.body = {
         success: true,
         data: {
@@ -79,12 +92,24 @@ export default class BLog {
   static async getBlogList(ctx) {
     let { title, categoryId, authId, status } = ctx.request.body
     try {
-      let list = await blogService.getBlogList(title, categoryId, authId, status)
+      let blogData = await blogService.getBlogList(title, categoryId, authId, status)
+      let list = []
+      blogData.rows.forEach(blog => {
+        blog = blog.toJSON()
+        let { t_category, t_user, ...data } = blog
+        list.push({
+          ...data,
+          categoryId: t_category.id,
+          categoryName: t_category.category,
+          userId: t_user.id,
+          authName: t_user.name
+        })
+      })
       ctx.body = {
         success: true,
         data: {
-          count: list.count,
-          list: list.rows
+          count: list.length,
+          list
         }
       }
       return

@@ -51,14 +51,29 @@ export default class tag {
   }
   static async getTagList (ctx) {
     let { name, status } = ctx.request.body
+    name = name === undefined ? '' : name
+    status = status === undefined ? -1 : status
     try {
-      console.log(999, name, status)
-      let data = await Tag.getTagList(name, status)
+      let tagsData = await Tag.getTagList(name, status)
+      let list = []
+      tagsData.rows.forEach(tag => {
+        tag = tag.toJSON()
+        list.push({
+          id: tag.id,
+          tag: tag.tag,
+          color: tag.color,
+          status: tag.status,
+          useNum: tag.Blog.length,
+          createTime: tag.createTime,
+          updateTime: tag.updateTime
+        })
+      })
+      console.log('===>', list)
       ctx.body = {
         success: true,
         data: {
-          count: data.count,
-          list: data.rows
+          list,
+          count: list.length
         }
       }
       return

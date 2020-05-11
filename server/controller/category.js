@@ -61,6 +61,8 @@ export default class categoryController {
   }
   static async getCategoryList(ctx) {
     let { name, status } = ctx.request.body
+    name = name === undefined ? '' : name
+    status = status === undefined ? -1 : status
     if (status < -1 || status === 0 || status > 3) {
       ctx.body = {
         success: false,

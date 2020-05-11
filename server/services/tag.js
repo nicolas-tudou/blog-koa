@@ -1,6 +1,7 @@
 import { Tag, Blog } from '../models'
-import { Op } from 'sequelize'
+import sequelize from 'sequelize'
 
+const Op = sequelize.Op
 export default class TagService {
   static async getOne(tagName) {
     return Tag.findOne({ where: { tag: tagName } })
@@ -12,6 +13,7 @@ export default class TagService {
     return Tag.findAndCountAll({
       include: {
         model: Blog,
+        as: 'Blog',
         attributes: ['id']
       },
       attributes: {
