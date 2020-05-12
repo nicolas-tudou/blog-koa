@@ -1,5 +1,4 @@
 import { TagBlog, Tag } from '../models'
-import tagBlog from '../models/tagBlog'
 import { Op } from 'sequelize'
 
 export default class TagBlogService {
@@ -7,7 +6,7 @@ export default class TagBlogService {
     return TagBlog.create({ tag_id, blog_id})
   }
   static async clear(tag_id, blog_id) {
-    return tagBlog.destroy({
+    return TagBlog.destroy({
       where: tag_id === -1 ? {
         blog_id
       } : blog_id === -1? {

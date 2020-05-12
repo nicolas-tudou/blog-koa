@@ -18,11 +18,6 @@ export default (sequelize, DataTypes) => sequelize.define('t_category', {
     field: 'category',
     allowNull: false
   },
-  blogNum: {
-    type: DataTypes.INTEGER(),
-    field: 'blog_num',
-    default: 0
-  },
   createTime: {
     type: DataTypes.DATE(),
     field: 'c_time'

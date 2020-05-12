@@ -58,8 +58,8 @@
       </div>
       <a-button :loading="loading" type="primary" @click="saveBlog">保存</a-button>
     </div>
-    <div class="detail-content">
-      <editor :options="{ value: blog.detail }" @change="editorChange" @load="editorLoad" />
+    <div class="detail-content" v-if="loadEditor">
+      <editor :options="{ value: blog.detail, markDown: blog.detail }" :detail="blog.detail" @change="editorChange" @load="editorLoad" />
     </div>
     <div class="detail-comment">
       <comment-item v-for="comment in commentList" :key="comment.id" :comment="comment" />
@@ -97,6 +97,7 @@ export default {
   },
   data () {
     return {
+      loadEditor: false,
       loading: false,
       fileList: [],
       categoryList: [],
@@ -108,7 +109,7 @@ export default {
         categoryId: '',
         logo: '',
         brief: '',
-        detail: '',
+        detail: localStorage.getItem('blogDetail') || '',
         tags: []
       }
     }
@@ -116,8 +117,9 @@ export default {
   created () {
     if (this.$route.query.id) {
       this.getBlogDetail()
-      this.getComment()
+      // this.getComment()
     }
+    this.loadEditor = true
     this.getCategoryList()
     this.getTagList()
   },
@@ -145,17 +147,12 @@ export default {
           response: 'Server Error 500',
           url: res.logo
         }]
-        this.getdefaultTags(res.tags)
+        this.loadEditor = true
       })
     },
     getComment () {
       getCommentApi({ id: this.$route.query.id }).then(res => {
         this.commentList = res.list
-      })
-    },
-    getdefaultTags (tags) {
-      tags.forEach(tag => {
-        this.defaultTags.push(tag.tagId)
       })
     },
     getCategoryList () {
@@ -182,8 +179,8 @@ export default {
       this.blog.logo = ''
     },
     editorChange (e) {
-      console.log('-----', e)
       this.blog.detail = e
+      localStorage.setItem('blogDetail', e)
     },
     editorLoad (e) {
       console.log('=====', e)
@@ -197,12 +194,12 @@ export default {
         this.$message.warning({ content: '请补充完整博客信息，再次提交' })
         return
       }
-      this.blog.authId = JSON.parse(localStorage.getItem('user')).id
       if (this.$route.query.id) {
         updateBlogApi(this.blog).then(res => {
           console.log('update blog:', res)
         })
       } else {
+        this.blog.authId = JSON.parse(localStorage.getItem('user')).id
         addNewBlogApi(this.blog).then(res => {
           console.log('add new blog:', res)
         })

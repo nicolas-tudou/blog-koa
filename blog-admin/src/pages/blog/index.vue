@@ -16,7 +16,7 @@
         <label>作者：</label>
         <a-select style="width: 120px;" v-model="reqData.authId">
           <a-select-option :value="-1">全部</a-select-option>
-          <a-select-option v-for="user in userList" :key="user.id" :value="user.id">{{user.userName}}</a-select-option>
+          <a-select-option v-for="user in userList" :key="user.id" :value="user.id">{{user.name}}</a-select-option>
         </a-select>
       </div>
       <div class="filter-item">
@@ -51,12 +51,13 @@
         <a-badge v-if="+text === blogStatusMap.deleted" status="default" text="已删除" />
       </template>
       <template #blogTags="tags">
+        <span v-if="!tags.length">暂无标签</span>
         <a-tag v-for="tag in tags" :key="tag.tagId" :color="tag.color">{{tag.tagName}}</a-tag>
       </template>
       <template #operation="text, record">
         <div class="operation-btn">
           <a-button type="primary" @click="toEditBlog(record)">编辑</a-button>
-          <a-button v-if="record.status === blogStatusMap.hide" type="primary" @click="showBlog(record)">上架</a-button>
+          <a-button v-if="record.status !== blogStatusMap.normal" type="primary" @click="showBlog(record)">上架</a-button>
           <a-button v-if="record.status === blogStatusMap.normal" @click="hideBLog(record)">下架</a-button>
           <a-button v-if="record.status !== blogStatusMap.deleted" @click="deleteBlog(record)">删除</a-button>
         </div>
@@ -65,7 +66,6 @@
     <div class="page-box">
       <a-pagination
         showSizeChanger
-        hideOnSinglePage
         showQuickJumper
         :page="pageData.page"
         :pageSize="pageData.pageSize"
@@ -81,9 +81,11 @@
 <script>
 import { blogColumns } from '@/columns/blogColumns'
 
-import { getUserListApi } from '@/mockData/user'
-import { getCategoryListApi } from '@/mockData/category'
+// import { getUserListApi } from '@/mockData/user'
+// import { getCategoryListApi } from '@/mockData/category'
 // import { getBlogListApi, hideBlogApi, showBlogApi, deleteBlogApi } from '@/mockData/blog'
+import { getUserListApi } from '@/api/userApi'
+import { getCategoryListApi } from '@/api/categoryApi'
 import { getBlogListApi, hideBlogApi, showBlogApi, deleteBlogApi } from '@/api/blogApi'
 
 import { blogStatus, blogStatusMap } from '@/config/status'
@@ -143,7 +145,8 @@ export default {
       if (this.tableLoading) return
       this.tableLoading = true
       getBlogListApi(Object.assign({}, this.reqData, this.pageData)).then(res => {
-        this.pageData.total = res.total
+        console.log(333, res)
+        this.pageData.total = res.count
         this.blogList = res.list
       }).finally(() => {
         this.tableLoading = false
@@ -167,7 +170,6 @@ export default {
      * @function 前往编辑博客页面
      */
     toEditBlog (record) {
-      console.log('edit', record)
       this.$router.push({ name: 'detail', query: { id: record.id }})
     },
     addNewBlog () {
@@ -184,7 +186,7 @@ export default {
         content: '是否确认下架当前博客',
         onOk () {
           console.log('confirm hide blog')
-          hideBlogApi(record.id).then(() => {
+          hideBlogApi({ id: record.id }).then(() => {
             that.$message.success({ content: '操作成功' })
             that.queryBlog()
           })
@@ -202,7 +204,7 @@ export default {
         content: '是否确认上架当前博客',
         onOk () {
           console.log('confirm hide blog')
-          showBlogApi(record.id).then(() => {
+          showBlogApi({ id: record.id }).then(() => {
             that.$message.success({ content: '操作成功' })
             that.queryBlog()
           })
@@ -220,7 +222,7 @@ export default {
         content: '是否确认删除当前博客',
         onOk () {
           console.log('confirm hide blog')
-          deleteBlogApi(record.id).then(() => {
+          deleteBlogApi({ id: record.id }).then(() => {
             that.$message.success({ content: '操作成功' })
             that.queryBlog()
           })
@@ -231,8 +233,8 @@ export default {
      * @function 分页器野马改变
      * @param {Object} pageData 改变之后的分页参数
      */
-    paginationChange (...pageData) {
-      Object.assign(this.pageData, pageData)
+    paginationChange (...[page, pageSize]) {
+      Object.assign(this.pageData, { page, pageSize })
       this.queryBlog()
     }
   }

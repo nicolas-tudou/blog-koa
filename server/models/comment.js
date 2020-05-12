@@ -10,7 +10,7 @@
     u_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP on UPDATE CURRENT_TIMESTAMP
     );
  */
-export default (sequelize, DataTypes) => sequelize.define('t_user', {
+export default (sequelize, DataTypes) => sequelize.define('t_comment', {
   id: {
     type: DataTypes.INTEGER(),
     field: 'id',

@@ -1,16 +1,19 @@
 import { Blog, User, Category, Tag, TagBlog, Comment } from '../models'
-import { Op } from 'sequelize'
-import BLog from '../controller/blog'
+import sequelize from 'sequelize'
+const Op = sequelize.Op
 
 export default class blogService {
   static async createNewBlog(title, logo, brief, authId, categoryId, tags, detail) {
     return Blog.create({ title, logo, brief, authId, categoryId, detail })
   }
   static async updateBlog(id, ...params) {
-    return BLog.update({ ...params }, { where: id })
+    return Blog.update({ ...params }, { where: { id } })
   }
-  static async getBlogList(title, categoryId, authId, status) {
+  static async getBlogList(title, categoryId, authId, status, page, pageSize) {
     return Blog.findAndCountAll({
+      distinct: true,
+      offset: page * pageSize - pageSize,
+      limit: pageSize,
       attributes: [
         'id',
         'title',
@@ -27,19 +30,21 @@ export default class blogService {
       include: [
         {
           model: User,
-          attributes: ['id', 'name']
+          attributes: [['id', 'authId'], ['name', 'authName']]
         },
         {
           model: Tag,
-          attributes: ['id']
+          attributes: [['id', 'tagId'], ['tag', 'tag'], 'color']
         },
         {
           model: Comment,
-          attributes: ['id']
+          attributes: [
+            ['id', 'comontId']
+          ]
         },
         {
           model: Category,
-          attributes: ['id', 'category']
+          attributes: [['id', 'categoryId'], ['category', 'categoryName']]
         }
       ],
       where: {
@@ -63,19 +68,19 @@ export default class blogService {
     })
   }
   static async getBlogDetail(id) {
-    return BLog.findOne({
+    return Blog.findOne({
       include: [
         {
           model: User,
-          attributes: ['id']
+          attributes: [['id', 'authId']]
         },
         {
           model: Tag,
-          attributes: ['id']
+          attributes: [['id', 'tagId']]
         },
         {
           model: Category,
-          attributes: ['id']
+          attributes: [['id', 'categoryId']]
         }
       ],
       attributes: {
@@ -92,7 +97,7 @@ export default class blogService {
     }, { where: { id } })
   }
   static async likeBlog(id, step) {
-    let blog = await BLog.findOne({ where: { id } })
+    let blog = await Blog.findOne({ where: { id } })
     return blog.increment('likeNum', step)
   }
   static async dislikeNum(id, step) {

@@ -17,11 +17,12 @@ export default class UserServer {
     return User.findAndCountAll({
       include: {
         model: Blog,
-        attributes: ['auth_id']
+        attributes: [['id', 'blogId']]
       },
       attributes: {
         exclude: ['c_time', 'u_time']
       },
+      distinct: true,
       where: {
         [Op.and]: [
           {

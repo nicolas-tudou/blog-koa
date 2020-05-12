@@ -25,7 +25,6 @@ export default class BLog {
     }
     try {
       let blog = await blogService.createNewBlog(title, logo, brief, authId, categoryId, tags || [], detail)
-      console.log(99, blog[null])
       let blogId = blog[null]
       if (tags || tags.length) {
         tags.forEach(async id => await TagBLogService.create(id, blogId))
@@ -57,7 +56,7 @@ export default class BLog {
       tags,
       detail,
       authId
-    } = body
+    } = ctx.request.body
     if (!title || !logo || !brief || !categoryId || !authId || !detail) {
       ctx.body = {
         success: false,
@@ -81,6 +80,7 @@ export default class BLog {
       }
       return
     } catch (err) {
+      console.log(err)
       ctx.body = {
         success: false,
         errorCode: errCode.NETWORK_ERROR,
@@ -90,25 +90,33 @@ export default class BLog {
     }
   }
   static async getBlogList(ctx) {
-    let { title, categoryId, authId, status } = ctx.request.body
+    let { title, categoryId, authId, status, page, pageSize } = ctx.request.body
     try {
-      let blogData = await blogService.getBlogList(title, categoryId, authId, status)
+      let blogData = await blogService.getBlogList(title, categoryId, authId, status, page, pageSize)
       let list = []
       blogData.rows.forEach(blog => {
         blog = blog.toJSON()
-        let { t_category, t_user, ...data } = blog
+        let { t_category, t_user, t_comments, t_tags, ...data } = blog
+        let tags = []
+        t_tags.forEach(tag => {
+          tags.push({
+            tagId: tag.tagId,
+            tagName: tag.tag,
+            color: tag.color
+          })
+        })
         list.push({
           ...data,
-          categoryId: t_category.id,
-          categoryName: t_category.category,
-          userId: t_user.id,
-          authName: t_user.name
+          ...t_category,
+          ...t_user,
+          commentNum: t_comments.length,
+          tags: tags
         })
       })
       ctx.body = {
         success: true,
         data: {
-          count: list.length,
+          count: blogData.count,
           list
         }
       }
@@ -126,12 +134,20 @@ export default class BLog {
   static async getBlogDetail(ctx) {
     let { id } = ctx.request.body
     try {
-      let detail = await blogService.getBlogDetail(id)
+      let { t_user, t_tags, t_category, ...blogInfo} = (await blogService.getBlogDetail(id)).toJSON()
+      let tags = []
+      t_tags.forEach(tag => {
+        tags.push(tag.tagId)
+      })
+      let data = {
+        ...blogInfo,
+        ...t_user,
+        ...t_category,
+        tags
+      }
       ctx.body = {
         success: true,
-        data: {
-          ...detail
-        }
+        data
       }
       return
     } catch(err) {

@@ -95,13 +95,20 @@ export default class user {
   static async getUserList(ctx) {
     let { name, identify, status} = ctx.request.body
     try {
-      let userData = await UserServer.getUserList(name, identify, status)
-      console.log('--->>', userData)
+      let userData = await UserServer.getUserList(name = '', identify = -1, status = -1)
+      let list = []
+      userData.rows.forEach(user => {
+        let { t_blogs, ...userInfo} = user.toJSON()
+        list.push({
+          ...userInfo,
+          blogNum: t_blogs.length
+        })
+      })
       ctx.body = {
         success: true,
         data: {
           count: userData.count,
-          list: userData.rows
+          list: list
         }
       }
     } catch(err) {

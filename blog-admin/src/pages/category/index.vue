@@ -20,7 +20,7 @@
     </div>
     <a-table
       bordered
-      :scroll="{ y: 860 }"
+      :scroll="{ y: 560 }"
       :loading="tableLoading"
       :columns="categoryColumns"
       :dataSource="categoryList"

@@ -26,7 +26,9 @@ export default {
         mode: 'markdown',
         path : '/lib/editor.md/lib/',
         value: '',
+        markDown: '',
         placeholder: '开始创建博客啦～～',
+        saveHTMLToTextarea: true,
         readOnly: false,
         tabSize: 2,
         indentUnit: 2,
@@ -46,10 +48,11 @@ export default {
     }
   },
   mounted () {
-    const vm = this
-    this.requireEditor(function(){
-      vm.editor = window.editormd(vm.id,vm.getOptions());
-    })
+    setTimeout(() => {
+      this.requireEditor(() => {
+        this.editor = window.editormd(this.id, this.getOptions())
+      })
+    }, 700)
   },
   methods: {
     /**
@@ -70,6 +73,9 @@ export default {
       $.getScript("/lib/editor.md/editormd.min.js",function(){
         callback();
       })
+    },
+    setValue (content) {
+      this.editor.setValue(content)
     },
     /**
      * @function 编辑器内容改变

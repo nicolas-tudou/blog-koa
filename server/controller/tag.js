@@ -54,26 +54,21 @@ export default class tag {
     name = name === undefined ? '' : name
     status = status === undefined ? -1 : status
     try {
-      let tagsData = await Tag.getTagList(name, status)
+      let { count, rows} = await Tag.getTagList(name, status)
       let list = []
-      tagsData.rows.forEach(tag => {
-        tag = tag.toJSON()
+      rows.forEach(tag => {
+        let { t_blogs, ...tagInfo } = tag.toJSON()
         list.push({
-          id: tag.id,
-          tag: tag.tag,
-          color: tag.color,
-          status: tag.status,
-          useNum: tag.Blog.length,
-          createTime: tag.createTime,
-          updateTime: tag.updateTime
+          ...tagInfo,
+          useNum: t_blogs.length
         })
       })
       console.log('===>', list)
       ctx.body = {
         success: true,
         data: {
-          list,
-          count: list.length
+          count,
+          list
         }
       }
       return

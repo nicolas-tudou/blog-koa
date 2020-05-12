@@ -72,12 +72,20 @@ export default class categoryController {
       return
     }
     try {
-      let { count, rows} = await Category.getCategoryList(name, status)
+      let { count, rows } = await Category.getCategoryList(name, status)
+      let list = []
+      rows.forEach(category => {
+        let { t_blogs, ...categoryInfo } = category.toJSON()
+        list.push({
+          ...categoryInfo,
+          blogNum: t_blogs.length
+        })
+      })
       ctx.body = {
         success: true,
         data: {
           count,
-          list: rows
+          list: list
         }
       }
       return

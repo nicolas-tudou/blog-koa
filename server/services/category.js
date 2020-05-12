@@ -21,11 +21,12 @@ export default class CategoryService {
     return Category.findAndCountAll({
       include: {
         model: Blog,
-        attributes: ['category_id']
+        attributes: [['id', 'blogId']]
       },
       attributes: {
         exclude: ['c_time', 'u_time']
       },
+      distinct: true,
       where: {
         [Op.and]: [
           {

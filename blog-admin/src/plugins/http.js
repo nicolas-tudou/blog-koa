@@ -21,11 +21,13 @@ http.interceptors.response.use(response => {
       })
       window.location.reload()
     }
+    Vue.prototype.$message.error(response.data.message)
+    return Promise.reject(response.data)
   }
 }, error => {
   console.log(error)
   Vue.prototype.$message.error(error.message || '系统错误，请重试')
-  return error
+  return Promise.reject(error)
 })
 
 function Post (url, data, ...options) {

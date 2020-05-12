@@ -13,12 +13,12 @@ export default class TagService {
     return Tag.findAndCountAll({
       include: {
         model: Blog,
-        as: 'Blog',
         attributes: ['id']
       },
       attributes: {
         exclude: ['c_time', 'u_time']
       },
+      distinct: true,
       where: {
         [Op.and]: [
           {
