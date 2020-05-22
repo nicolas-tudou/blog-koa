@@ -45,6 +45,9 @@ router.get('/admin', async (ctx, next) => {
 router.get('/blog', async (ctx, next) => {
   await ctx.render('blog/index')
 })
+router.get('*', async (ctx, next) => {
+  await ctx.render('admin/index')
+})
 
 app.on('error', function(err, ctx) {
   console.log(err)
