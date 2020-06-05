@@ -1,0 +1,72 @@
+.item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  &:last-child {
+    border-bottom: none;
+  }
+  .blog-logo {
+    width: 200px;
+    height: 200px;
+    margin-right: 20px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+  }
+  .blog {
+    color: #333;
+    font-size: 24px;
+    .title {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .brief {
+      color: #999;
+    }
+    .info {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      color: #666;
+      font-size: 16px;
+      .info-item {
+        margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      .info-icon {
+        position: relative;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:hover {
+          color: #5784ff;
+        }
+        &.active {
+          color: #5784ff;
+        }
+        &::after {
+          content: '|';
+          margin-left: 6px;
+        }
+        .info-text {
+          margin-left: 2px;
+        }
+      }
+    }
+    .tag {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      line-height: 1;
+      font-size: 16px;
+      .tag-item {
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+    }
+  }
+}

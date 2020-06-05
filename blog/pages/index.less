@@ -1,7 +1,44 @@
 .bg {
-  overflow: hidden;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
+  padding: 10px 0;
   background: url(/admin_sign_bg.jpeg) center no-repeat;
   background-size: cover;
+  .content-wrapper {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    min-width: 1080px;
+    height: 100%;
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 36px;
+      img {
+        width: 120px;
+        margin-right: 20px;
+      }
+      .header-info {
+        color: #333;
+        font-size: 18px;
+        text-align: center;
+        .header-title {
+          color: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+    .content {
+      flex: 1;
+      height: 0;
+    }
+    .footer {
+      text-align: center;
+    }
+  }
 }

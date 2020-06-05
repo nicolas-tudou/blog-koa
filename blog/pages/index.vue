@@ -1,23 +1,24 @@
 <template>
   <div class="bg">
     <div class="content-wrapper">
-      <span>{{info.list.length}}</span>
-      <nuxt-child/>
+      <div class="header">
+        <img src="/blog_logo.jpg" />
+        <div class="header-info">
+          <p class="header-title">土豆的博客</p>
+          <p>brain</p>
+        </div>
+      </div>
+      <div class="content">
+        <nuxt-child/>
+      </div>
+      <!-- <div class="footer">Copyright © 浙ICP备19019129号</div> -->
     </div>
   </div>
 </template>
 
 <script>
-import { getCategoryListApi } from '~/api'
 export default {
-  name: 'root',
-  asyncData ({ $axios }) {
-    return $axios.$post('/api/category/query/list').then(res => {
-      return { info: res}
-    }).catch(err => {
-      console.log(999, err)
-    })
-  }
+  name: 'root'
 }
 </script>
 

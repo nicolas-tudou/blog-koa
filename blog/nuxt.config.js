@@ -1,3 +1,4 @@
+const path = require('path')
 
 export default {
   mode: 'universal',
@@ -23,13 +24,43 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/styles/common.less'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/axios'
+    '~/plugins/axios',
+    { src: '@/plugins/components', ssr: true }
   ],
+  router: {
+    // middleware: 'router',
+    extendRoutes (routes, resolve) {
+      routes.splice(0, routes.length)
+      routes.push({
+        path: '/',
+        name: 'root',
+        redirect: '/blog',
+        component: resolve(__dirname, 'pages/index'),
+        children: [
+          {
+            path: '/blog',
+            name: 'blog',
+            component: resolve(__dirname, 'pages/blog')
+          },
+          {
+            path: '/blog/detail',
+            name: 'detail',
+            component: resolve(__dirname, 'pages/blogDetail')
+          }
+        ]
+      },
+      {
+        path: '*',
+        redirect: '/blog'
+      })
+    }
+  },
   /*
   ** Nuxt.js dev-modules
   */
@@ -60,6 +91,19 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+      config.module.rules.forEach(rule => {
+        if (rule.test.toString().indexOf('svg') > -1) {
+          rule.exclude = [path.resolve(__dirname, './svg')]
+        }
+      })
+      config.module.rules.push({
+        test: /\.svg$/,
+        loader: 'svg-sprite-loader',
+        include: [path.resolve(__dirname, './svg')],
+        options: {
+          symbolId: 'icon-[name]'
+        }
+      })
     }
   }
 }

@@ -91,6 +91,7 @@ export default class BLog {
   }
   static async getBlogList(ctx) {
     let { title, categoryId, authId, status, page, pageSize } = ctx.request.body
+    console.log('====>', categoryId)
     try {
       let blogData = await blogService.getBlogList(title, categoryId, authId, status, page, pageSize)
       let list = []
@@ -134,7 +135,7 @@ export default class BLog {
   static async getBlogDetail(ctx) {
     let { id } = ctx.request.body
     try {
-      let { t_user, t_tags, t_category, ...blogInfo} = (await blogService.getBlogDetail(id)).toJSON()
+      let { t_user, t_tags, t_category, ...blogInfo } = (await blogService.getBlogDetail(id)).toJSON()
       let tags = []
       t_tags.forEach(tag => {
         tags.push(tag.tagId)

@@ -19,7 +19,8 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.10.3",
     "axios": "^0.19.2",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "svg-sprite-loader": "^5.0.0"
   },
   "devDependencies": {
     "less": "^3.11.1",

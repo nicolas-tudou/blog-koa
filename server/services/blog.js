@@ -9,7 +9,7 @@ export default class blogService {
   static async updateBlog(id, ...params) {
     return Blog.update({ ...params }, { where: { id } })
   }
-  static async getBlogList(title, categoryId, authId, status, page, pageSize) {
+  static async getBlogList(title = '', categoryId = -1, authId = -1, status = -1, page = 1, pageSize = 10) {
     return Blog.findAndCountAll({
       distinct: true,
       offset: page * pageSize - pageSize,
@@ -84,7 +84,7 @@ export default class blogService {
         }
       ],
       attributes: {
-        exclude: ['c_time', 'u_time', 'read_num', 'like_num', 'dislike_num']
+        exclude: ['c_time', 'u_time', 'read_num', 'like_num', 'dislike_num', 'auth_id', 'category_id']
       },
       where: {
         id
