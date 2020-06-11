@@ -14,6 +14,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      // { rel: 'stylesheet', type: 'text/css', href: '/github-markdown.css' }
     ]
   },
   /*
@@ -24,14 +25,16 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/styles/common.less'
+    '~/assets/styles/common.less',
+    '~/assets/styles/github-markdown.css'
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     '~/plugins/axios',
-    { src: '@/plugins/components', ssr: true }
+    { src: '@/plugins/components', ssr: true },
+    { src: '@/plugins/mavonEditor', ssr: false }
   ],
   router: {
     // middleware: 'router',

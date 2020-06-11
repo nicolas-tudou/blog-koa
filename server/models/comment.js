@@ -23,8 +23,7 @@ export default (sequelize, DataTypes) => sequelize.define('t_comment', {
   },
   parent: {
     type: DataTypes.STRING(),
-    field: 'parent',
-    allowNull: false
+    field: 'parent'
   },
   comment: {
     type: DataTypes.STRING(),

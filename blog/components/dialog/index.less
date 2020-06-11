@@ -1,0 +1,49 @@
+.dialog-box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,.3);
+  .dialog-wrapper {
+    overflow: hidden;
+    max-width: 60%;
+    max-height: 80%;
+    background: #fff;
+    border-radius: 8px;
+    transform: scale(.01);
+    transition: transform 300ms ease-in-out;
+    &.show {
+      transform: scale(1);
+    }
+    .title {
+      padding: 10px;
+      line-height: 32px;
+      font-size: 20px;
+    }
+    .content {
+      padding: 0 10px;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 46px;
+      margin-top: 10px;
+      border-top: 1px solid #eee;
+      .btn {
+        flex: 1;
+        height: 100%;
+        font-size: 20px;
+        &:first-child {
+          border-right: 1px solid #eee;
+        }
+      }
+    }
+  }
+}

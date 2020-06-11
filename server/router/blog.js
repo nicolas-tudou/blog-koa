@@ -1,6 +1,7 @@
 import category from '../controller/category'
 import tag from '../controller/tag'
 import blog from '../controller/blog'
+import comment from '../controller/comment'
 import jwt from '../lib/jwt'
 import identifyCheck from '../lib/identifyCheck'
 import identify from '../config/identify'
@@ -30,4 +31,8 @@ export default router => {
   router.post('/api/blog/set/delete', jwt, identifyCheck(identify.ADMIN), blog.deleteBlog)
   router.post('/api/blog/set/like', blog.likeBlog)
   router.post('/api/blog/set/dislike', blog.dislikeBlog)
+
+  // comment
+  router.post('/api/comment/query/list', comment.getCommentList)
+  router.post('/api/comment/set/add', comment.createComment)
 }

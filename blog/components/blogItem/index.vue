@@ -1,8 +1,8 @@
 <template>
-  <div class="item" @click="toDetail">
+  <div class="item">
     <div class="blog-logo" :style="{backgroundImage: 'url(' + blog.logo.replace(/todo-fordream\.club/, 'localhost:8081') + ')'}"></div>
     <div class="blog">
-      <p class="title">{{blog.title}}</p>
+      <p class="title" @click="toDetail">{{blog.title}}</p>
       <div class="info">
         <p class="info-item">作者:{{blog.authName}}</p>
         <p class="info-item">分类:{{blog.categoryName}}</p>
@@ -25,32 +25,32 @@
         <p class="info-item">更新时间:{{blog.updateTime}}</p>
       </div>
       <p class="brief">{{blog.brief}}</p>
-      <div class="tag" v-if="blog.tags.length">
+      <div class="tag-box" v-if="blog.tags.length">
         <label>标签：</label>
-        <span
+        <blog-tag
           class="tag-item"
           v-for="tag in blog.tags"
           :key="tag.tagId"
-          :style="{background: tag.color}"
-          >{{tag.tagName}}</span>
+          :tag="tag"
+          />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import blogTag from '@/components/tag'
+import likeBlogMixin from '@/mixins/likeBlogMixin'
 export default {
   name: 'blogItem',
+  components: {
+    blogTag
+  },
+  mixins: [likeBlogMixin],
   props: {
     blog: {
       type: Object,
       require: true
-    }
-  },
-  data () {
-    return {
-      likeFlag: localStorage.getItem('like-blog-' + this.blog.id),
-      dislikeFlag: localStorage.getItem('dislike-blog-' + this.blog.id)
     }
   },
   methods: {
@@ -65,30 +65,6 @@ export default {
           id: this.blog.id
         }
       })
-    },
-    /**
-     * @function 点赞
-     */
-    likeBlog () {
-      if (this.likeFlag) {
-        localStorage.removeItem('like-blog-' + this.blog.id)
-        this.likeFlag = false
-        return
-      }
-      this.likeFlag = true
-      localStorage.setItem('like-blog-' + this.blog.id, '1')
-    },
-    /**
-     * @function 点踩
-     */
-    dislikeBlog () {
-      if (this.dislikeFlag) {
-        localStorage.removeItem('dislike-blog-' + this.blog.id)
-        this.dislikeFlag = false
-        return
-      }
-      this.dislikeFlag = true
-      localStorage.setItem('dislike-blog-' + this.blog.id, '1')
     }
   }
 }

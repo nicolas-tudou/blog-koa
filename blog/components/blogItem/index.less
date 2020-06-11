@@ -3,7 +3,6 @@
   align-items: flex-start;
   padding: 20px 0;
   border-bottom: 1px solid #eee;
-  cursor: pointer;
   &:last-child {
     border-bottom: none;
   }
@@ -21,6 +20,7 @@
     .title {
       font-size: 32px;
       font-weight: bold;
+      cursor: pointer;
     }
     .brief {
       color: #999;
@@ -57,16 +57,10 @@
         }
       }
     }
-    .tag {
-      display: flex;
-      align-items: center;
+    .tag-box {
       margin-top: 10px;
-      line-height: 1;
-      font-size: 16px;
-      .tag-item {
-        padding: 2px 4px;
-        border-radius: 4px;
-      }
+      color: #666;
+      font-size: 14px;
     }
   }
 }

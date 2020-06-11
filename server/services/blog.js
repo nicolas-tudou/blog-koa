@@ -6,8 +6,9 @@ export default class blogService {
   static async createNewBlog(title, logo, brief, authId, categoryId, tags, detail) {
     return Blog.create({ title, logo, brief, authId, categoryId, detail })
   }
-  static async updateBlog(id, ...params) {
-    return Blog.update({ ...params }, { where: { id } })
+  static async updateBlog(id, params) {
+    console.log('=====>', params)
+    return Blog.update(params, { where: { id } })
   }
   static async getBlogList(title = '', categoryId = -1, authId = -1, status = -1, page = 1, pageSize = 10) {
     return Blog.findAndCountAll({
@@ -72,11 +73,11 @@ export default class blogService {
       include: [
         {
           model: User,
-          attributes: [['id', 'authId']]
+          attributes: [['id', 'authId'], ['name', 'authName']]
         },
         {
           model: Tag,
-          attributes: [['id', 'tagId']]
+          attributes: [['id', 'tagId'], ['tag', 'tagName'], 'color']
         },
         {
           model: Category,

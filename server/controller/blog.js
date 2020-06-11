@@ -66,8 +66,7 @@ export default class BLog {
       return
     }
     try {
-      let blog = await blogService.updateBlog(id, title, logo, brief, authId, categoryId, tags, detail)
-      console.log(blog)
+      let blog = await blogService.updateBlog(id, { title, logo, brief, authId, categoryId, tags, detail })
       await TagBLogService.clear(-1, id)
       if (tags && tags.length) {
         tags.forEach(async tagId => await TagBLogService.create(tagId, id)) 
@@ -138,7 +137,11 @@ export default class BLog {
       let { t_user, t_tags, t_category, ...blogInfo } = (await blogService.getBlogDetail(id)).toJSON()
       let tags = []
       t_tags.forEach(tag => {
-        tags.push(tag.tagId)
+        tags.push({
+          tagId: tag.tagId,
+          tagName: tag.tagName,
+          color: tag.color
+        })
       })
       let data = {
         ...blogInfo,

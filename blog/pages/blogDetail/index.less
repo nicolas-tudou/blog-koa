@@ -1,3 +1,46 @@
 .detail {
-  background: #fff;
+  padding: 20px;
+  background: rgba(255,255,255,.7);
+  .blog-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.3);
+    .info-item {
+      margin-right: 10px;
+    }
+  }
+  .icon-box {
+    margin-right: 20px;
+    cursor: pointer;
+    &:hover {
+      color: #5784ff;
+    }
+    &.active {
+      color: #5784ff;
+    }
+    .info-text {
+      margin-left: 4px;
+    }
+  }
+  .view-info {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,.3);
+  }
+  .input-item {
+    display: flex;
+    align-items: center;
+    height: 32px;
+  }
+  .comment {
+    margin-top: 10px;
+    .comment-input {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+  }
 }

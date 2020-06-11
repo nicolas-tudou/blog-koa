@@ -1,6 +1,5 @@
 export default class ImageUpload {
   static async uploaded(ctx) {
-    console.log(ctx)
     ctx.body = {
       success: true,
       data: {
