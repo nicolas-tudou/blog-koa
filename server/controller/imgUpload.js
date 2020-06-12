@@ -3,7 +3,7 @@ export default class ImageUpload {
     ctx.body = {
       success: true,
       data: {
-        imgUrl: 'http://todo-fordream.club/' + ctx.req.file.path.replace(/^public\//, ''),
+        imgUrl: 'http://todo-fordream.club/' + ctx.req.file.path.replace(/.*static\//, ''),
         msg: '图片上传成功'
       }
     }
