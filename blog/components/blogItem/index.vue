@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="blog-logo" :style="{backgroundImage: 'url(' + blog.logo.replace(/todo-fordream\.club/, 'localhost:8081') + ')'}"></div>
+    <div class="blog-logo" :style="{backgroundImage: 'url(' + blog.logo + ')'}"></div>
     <div class="blog">
       <p class="title" @click="toDetail">{{blog.title}}</p>
       <div class="info">
