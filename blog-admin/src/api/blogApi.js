@@ -35,3 +35,7 @@ export const likeBlogApi = (data) => {
 export const ddislikeBlogApi = (data) => {
   return Post('/blog/set/dislike', data)
 }
+
+export const uploadImageAPi = data => {
+  return Post('/common/upload/image', data)
+}

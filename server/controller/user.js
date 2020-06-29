@@ -95,7 +95,7 @@ export default class user {
   static async getUserList(ctx) {
     let { name, identify, status} = ctx.request.body
     try {
-      let userData = await UserServer.getUserList(name = '', identify = -1, status = -1)
+      let userData = await UserServer.getUserList(name, identify, status)
       let list = []
       userData.rows.forEach(user => {
         let { t_blogs, ...userInfo} = user.toJSON()

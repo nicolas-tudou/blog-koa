@@ -59,7 +59,7 @@
       <a-button :loading="loading" type="primary" @click="saveBlog">保存</a-button>
     </div>
     <div class="detail-content" v-if="loadEditor">
-      <editor :options="{ value: blog.detail, markDown: blog.detail }" :detail="blog.detail" @change="editorChange" @load="editorLoad" />
+      <editor :detail="blog.detail" @change="editorChange" @load="editorLoad" />
     </div>
     <div class="detail-comment">
       <comment-item v-for="comment in commentList" :key="comment.id" :comment="comment" />

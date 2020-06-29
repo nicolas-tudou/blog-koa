@@ -1,97 +1,102 @@
 <template>
-  <div :id="id"></div>
+  <div class="editor-box">
+    <mavon-editor
+      class="editor"
+      ref="editor"
+      :toolbars="markdownOption"
+      placeholder="请开始你的表演..."
+      :value="detail"
+      @change="editorChange"
+      @imgAdd="imageUpload"
+    />
+  </div>
 </template>
 
 <script>
-import { v4 as uuid4 } from 'uuid'
-import jquery from 'jquery'
+import Vue from 'vue'
+import { uploadImageAPi } from '@/api/blogApi'
+import mavonEditore from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+Vue.use(mavonEditore)
+
 export default {
   name: 'Editor',
   props: {
-    id: {
+    detail: {
       type: String,
-      default: uuid4()
-    },
-    options: {
-      type: Object,
-      default () {
-        return {}
-      }
+      default: ''
     }
   },
   data () {
     return {
-      editor: null,
-      defaultOptions: {
-        mode: 'markdown',
-        path : '/lib/editor.md/lib/',
-        value: '',
-        markDown: '',
-        placeholder: '开始创建博客啦～～',
-        saveHTMLToTextarea: true,
-        readOnly: false,
-        tabSize: 2,
-        indentUnit: 2,
-        lineNumbers: false,
-        imageUpload: true,
-        imageFormats: ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'],
-        imageUploadURL: '',
-        crossDomainUpload: true,
-        uploadCallbackURL: '',
-        tocm: true,
-        tocDropdown: true,
-        flowChart: true,
-        sequenceDiagram: true,
-        onchange: this.editorChange,
-        onload: this.editorLoad
+      markdownOption: {
+        bold: true, // 粗体
+        italic: true, // 斜体
+        header: true, // 标题
+        underline: true, // 下划线
+        strikethrough: true, // 中划线
+        mark: true, // 标记
+        superscript: true, // 上角标
+        subscript: true, // 下角标
+        quote: true, // 引用
+        ol: true, // 有序列表
+        ul: true, // 无序列表
+        link: true, // 链接
+        imagelink: true, // 图片链接
+        code: true, // code
+        table: true, // 表格
+        fullscreen: true, // 全屏编辑
+        readmodel: true, // 沉浸式阅读
+        htmlcode: true, // 展示html源码
+        help: true, // 帮助
+        /* 1.3.5 */
+        undo: true, // 上一步
+        redo: true, // 下一步
+        trash: true, // 清空
+        save: true, // 保存（触发events中的save事件）
+        /* 1.4.2 */
+        navigation: true, // 导航目录
+        /* 2.1.8 */
+        alignleft: true, // 左对齐
+        aligncenter: true, // 居中
+        alignright: true, // 右对齐
+        /* 2.2.1 */
+        subfield: true, // 单双栏模式
+        preview: true, // 预览
       }
     }
   },
-  mounted () {
-    setTimeout(() => {
-      this.requireEditor(() => {
-        this.editor = window.editormd(this.id, this.getOptions())
-      })
-    }, 700)
-  },
   methods: {
     /**
-     * @function 获取编辑器配置信息
+     * @function 上传图片
      */
-    getOptions () {
-      return Object.assign({}, this.defaultOptions, this.options)
-    },
-    /**
-     * @function 生成编辑器
-     */
-    requireEditor(callback){
-      //设置全局变量，因为editormd依赖jquery
-      const $ = jquery
-      window.$=window.jQuery=$;
-      $('head').append($('<link rel="stylesheet" type="text/css" />').attr('href', '/lib/editor.md/css/editormd.min.css'))
-      //异步加载并执行
-      $.getScript("/lib/editor.md/editormd.min.js",function(){
-        callback();
+    imageUpload (pos, file) {
+      console.log(pos, file)
+      let form = new FormData()
+      form.append('file', file)
+      uploadImageAPi(form).then(res => {
+        console.log('upload image', res)
+        this.$refs.editor.$img2Url(pos, res.imgUrl)
       })
-    },
-    setValue (content) {
-      this.editor.setValue(content)
     },
     /**
      * @function 编辑器内容改变
-     * @param {Object} e 改变的值
+     * @param {Object} value
      */
-    editorChange () {
-      console.log('editorChange:')
-      this.$emit('change', this.editor.getValue())
-    },
-    /**
-     * @function 编辑器加载完成图片
-     */
-    editorLoad () {
-      console.log('editorload:')
-      this.$emit('load')
+    editorChange (value) {
+      console.log('editorChange:', value)
+      this.$emit('change', value)
     }
   }
 }
 </script>
+
+<style lang="less" scoped>
+.editor-box {
+  max-height: 1200px;
+  .editor {
+    overflow: auto;
+    height: 100%;
+  }
+}
+</style>

@@ -80,7 +80,7 @@ export default {
   },
   proxy: {
     '/api': {
-      target: 'http://localhost:3000',
+      target: 'http://admin.todo-fordream.club',
       pathRewrite: {
         '^/api': '/api'
       }

@@ -5,6 +5,7 @@ export default {
   BLOG_INFO_ERROR: 601,
   PARAM_EMPTY: 602,
   PARAM_ERROR: 603,
+  TOKEN_ERROR: 1000,
 
   // user
   USER_EXISTS: 721,

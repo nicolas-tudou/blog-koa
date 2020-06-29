@@ -13,7 +13,7 @@ export default class UserServer {
       }
     })
   }
-  static async getUserList (name, identify, status) {
+  static async getUserList (name = '', identify = -1, status = -1) {
     return User.findAndCountAll({
       include: {
         model: Blog,

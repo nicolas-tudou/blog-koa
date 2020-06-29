@@ -39,24 +39,15 @@ app
     })
   })
 
-router.get('/admin', async (ctx, next) => {
+router.get('/', async (ctx, next) => {
   await ctx.render('admin/index')
-})
-router.get('/blog', async (ctx, next) => {
-  await ctx.render('blog/index')
 })
 router.get('*', async (ctx, next) => {
   await ctx.render('admin/index')
 })
 
 app.on('error', function(err, ctx) {
-  console.log(err)
-  logger.error('server error', err, ctx)
-  ctx.body = {
-    success: false,
-    errorCode: errCode.NETWORK_ERROR,
-    message: '网络繁忙，请重试'
-  }
+  return
 })
 
 module.exports = app.listen(port, () => {

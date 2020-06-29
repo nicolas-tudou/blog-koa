@@ -15,17 +15,14 @@ http.interceptors.response.use(response => {
   if (response.data.success) {
     return response.data.data
   } else {
-    if (response.data.errorCode === 1000) {
-      Vue.prototype.$router.push({
-        name: 'signIn'
-      })
-      window.location.reload()
-    }
-    Vue.prototype.$message.error(response.data.message)
     return Promise.reject(response.data)
   }
 }, error => {
-  console.log(error)
+  console.log(777, error.response.status === 401)
+  if (error.response.status === 401) {
+    window.location.href = '/signIn'
+    return
+  }
   Vue.prototype.$message.error(error.message || '系统错误，请重试')
   return Promise.reject(error)
 })

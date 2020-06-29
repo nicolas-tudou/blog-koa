@@ -1,7 +1,6 @@
 import userRouter from './userRouter'
 import categoryRouter from './categoryRouter'
 import blogRouter from './blogRouter'
-import commentRouter from './commentRouter'
 import tagRouter from './tagRouter'
 
 const routes = [
@@ -27,7 +26,6 @@ const routes = [
     children: [
       ...blogRouter,
       ...categoryRouter,
-      ...commentRouter,
       ...tagRouter,
       ...userRouter
     ]
