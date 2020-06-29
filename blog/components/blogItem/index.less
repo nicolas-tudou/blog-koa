@@ -15,6 +15,7 @@
     background-position: center;
   }
   .blog {
+    flex: 1;
     color: #333;
     font-size: 24px;
     .title {
@@ -23,6 +24,10 @@
       cursor: pointer;
     }
     .brief {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
       color: #999;
     }
     .info {
