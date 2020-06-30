@@ -135,6 +135,7 @@ export default class BLog {
     let { id } = ctx.request.body
     try {
       let { t_user, t_tags, t_category, ...blogInfo } = (await blogService.getBlogDetail(id)).toJSON()
+      blogService.readBlog(id)
       let tags = []
       t_tags.forEach(tag => {
         tags.push({

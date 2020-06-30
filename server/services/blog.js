@@ -92,6 +92,10 @@ export default class blogService {
       }
     })
   }
+  static async readBlog(id) {
+    let blog = await Blog.findOne({ where: { id } })
+    return blog.increment('readNum')
+  }
   static async updateBlogStatus(id, status) {
     return Blog.update({
       status
@@ -99,10 +103,10 @@ export default class blogService {
   }
   static async likeBlog(id, step) {
     let blog = await Blog.findOne({ where: { id } })
-    return blog.increment('likeNum', step)
+    return step > 0 ? blog.increment('likeNum') : blog.decrement('likeNum')
   }
-  static async dislikeNum(id, step) {
+  static async dislikeBlog(id, step) {
     let blog = await Blog.findOne({ where: { id } })
-    return Blog.increment('dislikeNum', step)
+    return step > 0 ? blog.increment('dislikeNum') : blog.decrement('dislikeNum')
   }
 }

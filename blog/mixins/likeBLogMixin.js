@@ -1,3 +1,4 @@
+import { likeBlogApi, dislikeBlogApi } from '@/api'
 export default {
   data () {
     return {
@@ -11,28 +12,46 @@ export default {
   },
   methods: {
     /**
+     * export const likeBlogApi = (data) => {
+        return Post('/api/blog/set/like', data)
+      }
+
+      export const dislikeBlogApi = (data) => {
+        return Post('/api/blog/set/dislike', data)
+      }
+     */
+    /**
      * @function 点赞
      */
     likeBlog () {
-      if (this.likeFlag) {
-        localStorage.removeItem('like-blog-' + this.blog.id)
-        this.likeFlag = false
-        return
-      }
-      this.likeFlag = true
-      localStorage.setItem('like-blog-' + this.blog.id, '1')
+      console.log(111)
+      this.$axios.$post('/api/blog/set/like', { id: this.blog.id, step: this.likeFlag ? -1 : 1 }).then(res => {
+        if (this.likeFlag) {
+          localStorage.removeItem('like-blog-' + this.blog.id)
+          --this.blog.likeNum
+          this.likeFlag = false
+          return
+        }
+        ++this.blog.likeNum
+        this.likeFlag = true
+        localStorage.setItem('like-blog-' + this.blog.id, '1')
+      })
     },
     /**
      * @function 点踩
      */
     dislikeBlog () {
-      if (this.dislikeFlag) {
-        localStorage.removeItem('dislike-blog-' + this.blog.id)
-        this.dislikeFlag = false
-        return
-      }
-      this.dislikeFlag = true
-      localStorage.setItem('dislike-blog-' + this.blog.id, '1')
+      this.$axios.$post('/api/blog/set/dislike', { id: this.blog.id, step: this.likeFlag ? -1 : 1 }).then(res => {
+        if (this.dislikeFlag) {
+          localStorage.removeItem('dislike-blog-' + this.blog.id)
+          --this.blog.dislikeNum
+          this.dislikeFlag = false
+          return
+        }
+        ++this.blog.dislikeNum
+        this.dislikeFlag = true
+        localStorage.setItem('dislike-blog-' + this.blog.id, '1')
+      })
     }
   }
 }
