@@ -11,7 +11,10 @@
       </div>
       <div class="info-item">
         <label for="blog-category">分类：</label>
-        <a-select style="width: 260px;" v-model="blog.categoryId">
+        <a-select
+          style="width: 260px;"
+          :dropdownStyle="{'z-index': 9999}"
+          v-model="blog.categoryId">
           <a-select-option v-for="category in categoryList" :key="category.id" :value="category.id">{{category.category}}</a-select-option>
         </a-select>
       </div>
@@ -59,9 +62,9 @@
       <a-button :loading="loading" type="primary" @click="saveBlog">保存</a-button>
     </div>
     <div class="detail-content" v-if="loadEditor">
-      <editor :detail="blog.detail" @change="editorChange" @load="editorLoad" />
+      <editor :detail="blog.detail" @change="editorChange" />
     </div>
-    <div class="detail-comment">
+    <div class="detail-comment" v-if="commentList && commentList.length">
       <comment-item v-for="comment in commentList" :key="comment.id" :comment="comment" />
     </div>
     <a-modal v-model="showPreviewImg" :closable="false" :footer="null" @cancel="cancelPreview">
@@ -182,26 +185,44 @@ export default {
       this.blog.detail = e
       localStorage.setItem('blogDetail', e)
     },
-    editorLoad (e) {
-      console.log('=====', e)
-    },
     validataBlog () {
       let checkProps = ['title', 'brief', 'logo', 'categoryId', 'detail']
       return checkProps.every(prop => this.blog[prop])
     },
+    resetBlog () {
+      localStorage.removeItem('blogDetail')
+      this.blog = {
+        id: '',
+        title: '',
+        categoryId: '',
+        logo: '',
+        brief: '',
+        detail: '',
+        tags: []
+      }
+    },
     saveBlog () {
+      if (this.loading) return
       if (!this.validataBlog()) {
         this.$message.warning({ content: '请补充完整博客信息，再次提交' })
         return
       }
+      this.loading = true
       if (this.$route.query.id) {
         updateBlogApi(this.blog).then(res => {
           console.log('update blog:', res)
+          this.loading = false
+          this.$message.success({ content: '更新成功' })
+          this.resetBlog()
+          this.$router.back()
         })
       } else {
         this.blog.authId = JSON.parse(localStorage.getItem('user')).id
         addNewBlogApi(this.blog).then(res => {
           console.log('add new blog:', res)
+          this.loading = false
+          this.$message.success({ content: '创建成功' })
+          this.resetBlog()
         })
       }
     }

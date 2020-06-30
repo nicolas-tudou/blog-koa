@@ -71,7 +71,6 @@ export default {
      * @function 上传图片
      */
     imageUpload (pos, file) {
-      console.log(pos, file)
       let form = new FormData()
       form.append('file', file)
       uploadImageAPi(form).then(res => {
@@ -84,7 +83,6 @@ export default {
      * @param {Object} value
      */
     editorChange (value) {
-      console.log('editorChange:', value)
       this.$emit('change', value)
     }
   }

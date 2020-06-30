@@ -7,7 +7,9 @@
       </div>
       <div class="filter-item">
         <label>分类：</label>
-        <a-select style="width: 120px;" v-model="reqData.categoryId">
+        <a-select
+          style="width: 120px;"
+          v-model="reqData.categoryId">
           <a-select-option :value="-1">全部</a-select-option>
           <a-select-option v-for="category in categoryList" :key="category.id" :value="category.id">{{category.category}}</a-select-option>
         </a-select>
@@ -31,7 +33,7 @@
     </div>
     <a-table
       bordered
-      :scroll="{ x: 1600 }"
+      :scroll="{ x: 1600, y: 600 }"
       :loading="tableLoading"
       :columns="blogColumns"
       :dataSource="blogList"
@@ -67,7 +69,7 @@
       <a-pagination
         showSizeChanger
         showQuickJumper
-        :page="pageData.page"
+        :current="pageData.page"
         :pageSize="pageData.pageSize"
         :total="pageData.total"
         :pageSizeOptions="['10', '20', '50']"
@@ -133,7 +135,7 @@ export default {
         this.userList = user.list
         this.categoryList = category.list
         this.blogList = blog.list
-        this.pageData.total = blog.total
+        this.pageData.total = blog.count
       }).finally(() => {
         this.tableLoading = false
       })

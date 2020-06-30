@@ -12,7 +12,6 @@ export default class blogService {
   }
   static async getBlogList(title = '', categoryId = -1, authId = -1, status = -1, page = 1, pageSize = 10) {
     return Blog.findAndCountAll({
-      distinct: true,
       offset: page * pageSize - pageSize,
       limit: pageSize,
       attributes: [
