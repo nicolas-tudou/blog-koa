@@ -1,16 +1,19 @@
 .list {
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 64px;
   margin-bottom: 10px;
-  line-height: 32px;
+  line-height: 64px;
   border-bottom: 1px solid #eee;
   .list-item {
     height: 100%;
-    padding: 0 10px;
+    padding: 0 15px;
     cursor: pointer;
+    &:hover {
+      background: #ccc;
+    }
     &.active {
-      background: #cfc;
+      background: #ccc;
     }
   }
 }

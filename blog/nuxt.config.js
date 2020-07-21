@@ -33,8 +33,7 @@ export default {
   */
   plugins: [
     '~/plugins/axios',
-    { src: '@/plugins/components', ssr: true },
-    { src: '@/plugins/mavonEditor', ssr: false }
+    { src: '@/plugins/components', ssr: true }
   ],
   router: {
     // middleware: 'router',

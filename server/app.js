@@ -6,11 +6,15 @@ const convert = require('koa-convert')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
-const logger = require('koa-logger')
 const helmet = require('koa-helmet')
 const cors = require('koa2-cors')
 const path = require('path')
-
+const log4js = require('log4js')
+log4js.configure({
+  appenders: { cheese: { type: "file", filename: "cheese.log" } },
+  categories: { default: { appenders: ["cheese"], level: "error" } }
+})
+const logger = log4js.getLogger("cheese")
 
 import { port } from './config'
 import errCode from './config/errorCode'
@@ -25,7 +29,6 @@ app
   .use(bodyparser())
   .use(cors())
   .use(json())
-  .use(logger())
   .use(require('koa-static')(__dirname + '/public'))
   .use(require('koa-static')(__dirname + '/views'))
   .use(views(path.join(__dirname, '/views'), {
@@ -47,6 +50,7 @@ router.get('*', async (ctx, next) => {
 })
 
 app.on('error', function(err, ctx) {
+  logger.error(JSON.stringify(err))
   return
 })
 

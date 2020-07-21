@@ -44,6 +44,10 @@ export default {
     }
     return new Promise(resolve => {
       $axios.$post('/api/category/query/list').then(res => {
+        res.list.unshift({
+          id: -1,
+          category: '全部'
+        })
         data.categoryList = res.list
         data.formData.categoryId = res.list[0].id
         $axios.$post('/api/blog/query/list', data.formData).then(res => {
@@ -90,7 +94,6 @@ export default {
      * @param {Object} category 选中的分类信息
      */
     categoryChange (index, category) {
-      console.log(index, category)
       if (this.loading) return
       this.loadAll = false
       Object.assign(this.formData, {

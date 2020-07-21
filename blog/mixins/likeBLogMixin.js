@@ -1,4 +1,3 @@
-import { likeBlogApi, dislikeBlogApi } from '@/api'
 export default {
   data () {
     return {
@@ -11,15 +10,6 @@ export default {
     this.likeFlag = localStorage.getItem('like-blog-' + this.blog.id)
   },
   methods: {
-    /**
-     * export const likeBlogApi = (data) => {
-        return Post('/api/blog/set/like', data)
-      }
-
-      export const dislikeBlogApi = (data) => {
-        return Post('/api/blog/set/dislike', data)
-      }
-     */
     /**
      * @function 点赞
      */

@@ -18,8 +18,7 @@ http.interceptors.response.use(response => {
     return Promise.reject(response.data)
   }
 }, error => {
-  console.log(777, error.response.status === 401)
-  if (error.response.status === 401) {
+  if (error.response && error.response.status === 401) {
     window.location.href = '/signIn'
     return
   }

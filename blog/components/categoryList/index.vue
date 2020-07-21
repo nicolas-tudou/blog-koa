@@ -21,9 +21,6 @@ export default {
       default: 0
     }
   },
-  data () {
-    return {}
-  },
   methods: {
     /**
      * @function 点击分类
