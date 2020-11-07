@@ -92,62 +92,7 @@ export default {
       commentLength: 0,
       newComment: '',
       replyCommentId: null,
-      commentList: [
-        {
-          id: 1,
-          blogId: 2,
-          comment: 'idibwdeuwefvonoadnawndeiwad',
-          userName: 'npml',
-          userAvatar: '/blog_logo.jpg',
-          createTime: '2020-06-09',
-          children: [
-            {
-              id: 3,
-              blogId: 22,
-              comment: 'idibwdeuwefvonoadnawndeiwad',
-              userName: 'modmawokednaowen',
-              userAvatar: '/blog_logo.jpg',
-              createTime: '2020-06-09'
-            }
-          ]
-        },
-        {
-          id: 23,
-          blogId: 3434,
-          comment: 'idibwdeuwefvonoadnawndeiwad',
-          userName: 'npml',
-          userAvatar: '/blog_logo.jpg',
-          createTime: '2020-06-12 00:30',
-          children: [
-            {
-              id: 322,
-              blogId: 2,
-              comment: 'idibwdeuwefvonoadnawndeiwad',
-              userName: 'npml',
-              userAvatar: '/blog_logo.jpg',
-              createTime: '2020-06-12 02:20',
-              children: [
-                {
-                  id: 11243,
-                  blogId: 2,
-                  comment: 'idibwdeuwefvonoadnawndeiwad',
-                  userName: 'npml',
-                  userAvatar: '/blog_logo.jpg',
-                  createTime: '2020-06-09',
-                }
-              ]
-            },
-            {
-              id: 23231,
-              blogId: 2,
-              comment: 'idibwdeuwefvonoadnawndeiwad',
-              userName: 'npml',
-              userAvatar: '/blog_logo.jpg',
-              createTime: '2020-06-09',
-            }
-          ]
-        }
-      ]
+      commentList: []
     }
   },
   asyncData (context) {
