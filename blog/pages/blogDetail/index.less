@@ -33,8 +33,16 @@
   }
   .input-item {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     height: 32px;
+    margin-top: 10px;
+    &:first {
+      margin-top: 0;
+    }
+    input {
+      flex: 1;
+    }
   }
   .comment {
     margin-top: 10px;

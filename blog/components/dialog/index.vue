@@ -1,15 +1,17 @@
 <template>
   <div class="dialog-box" v-show="value" @click="maskClick">
     <div :class="['dialog-wrapper', { show: show }]" @click.stop="() => null">
-      <div class="title">
-        <template v-if="title">
-          {{title}}
-        </template>
-        <slot v-else name="title" />
-      </div>
-      <div class="content">
-        <template v-if="content">{{content}}</template>
-        <slot v-else name="default" />
+      <div class="dialog-body">
+        <div class="title">
+          <template v-if="title">
+            {{title}}
+          </template>
+          <slot v-else name="title" />
+        </div>
+        <div class="content">
+          <template v-if="content">{{content}}</template>
+          <slot v-else name="default" />
+        </div>
       </div>
       <div class="footer">
         <template v-if="!footer">

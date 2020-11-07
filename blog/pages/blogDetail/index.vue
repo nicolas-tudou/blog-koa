@@ -193,8 +193,13 @@ export default {
     },
     confirmComment () {
       console.log('确认发表评论', this.replyCommentId, this.newComment, this.user)
-      if (!this.user.userName || !this.user.userAvatar || !this.newComment) {
-        alert('请补充信息')
+      if (!this.user.userName || !this.user.userAvatar) {
+        this.showUserInfo = true
+        // alert('请提供用户信息')
+        return
+      }
+      if (!this.newComment) {
+        alert('请补充评论信息信息')
         return
       }
       this.$axios.$post('/api/comment/set/add', {
@@ -203,6 +208,7 @@ export default {
         comment: this.newComment,
         ...this.user
       }).then(res => {
+        this.newComment = ''
         this.getCommentList()
       })
     },
